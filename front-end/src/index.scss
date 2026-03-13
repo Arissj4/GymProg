@@ -1,0 +1,33 @@
+@use "./style/scss/mainStyles.scss" as *;
+
+#root{
+    @include costume-flex-box-container($justify: center);
+    height: 100dvh;
+    width: 100%;
+    background-color: $lightRootBackgroundColor;
+
+    #wrapper{
+        @include costume-flex-box-container($wrap: wrap);
+        @include hidden-scrollbar();
+        height: 100%;
+        min-width: 360px;
+        max-width: 700px;
+        background-color: $lightWrapperBackgroundColor;
+        box-shadow: #f0f0f0 0px 0px 20px 5px;
+
+        #sidebar{
+            @include costume-flex-box-container();
+            background-color: $lightSidebarBackgroundColor;
+            max-width: 30%;
+            min-width: 30%;;
+            height: 100%;
+            border-color: #e7e7e7;
+            padding: 12px 12px;
+        }
+
+        #home{
+            @include costume-flex-box-container();
+            padding: 12px 12px;
+        }
+    }
+}

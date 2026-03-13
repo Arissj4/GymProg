@@ -1,0 +1,32 @@
+$darkRootBackgroundColor: #014578;
+$lightRootBackgroundColor: #ffffff;
+
+$darkWrapperBackgroundColor: #002f52;
+$lightWrapperBackgroundColor: #ffffff;
+
+$darkSidebarBackgroundColor: #fbfafa;
+$lightSidebarBackgroundColor: #fbfafa;
+
+$mainBackgroundColor: #002642;
+
+@mixin costume-flex-box-container($display: flex, $grow: 1, $shrink: 1, $basis: auto, $wrap: wrap, $direction: row, $align: start, $justify: start){
+    display: $display;
+    flex: {
+        grow: $grow;
+        shrink: $shrink;
+        basis: $basis;
+        direction: $direction;
+        wrap: $wrap;
+    }
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin hidden-scrollbar(){
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar{
+        display: none;
+    }
+}

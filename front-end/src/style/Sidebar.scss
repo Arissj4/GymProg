@@ -1,0 +1,71 @@
+@use "./scss/mainStyles.scss" as *;
+
+#sidebar-list{
+  @include costume-flex-box-container($wrap: wrap, $direction: column);
+  width: 100%;
+
+  > div{
+    width: 100%;
+  }
+
+  > div:first-child{
+    @include costume-flex-box-container($wrap: nowrap);
+    margin: 0 0 16px 0;
+
+    > div{
+      @include costume-flex-box-container();
+    }
+
+    > div:first-child{
+      height: 24px;
+
+      > img{
+        min-width: 24px;
+        max-width: 24px;
+        height: 100%;
+      }
+
+      > svg{
+        min-width: 24px;
+        max-width: 24px;
+        height: 100%;
+      }
+    }
+
+    // > div:nth-child(2){
+    //   @include costume-flex-box-container($justify: center);
+    //   max-height: 24px;
+    //   overflow: auto;
+    //   padding: 0 6px;
+    // }
+
+    > div:last-child{
+      min-width: 24px;
+      max-width: 24px;
+      height: 24px;
+
+      > svg{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  > div:nth-child(2){
+    @include costume-flex-box-container($wrap: nowrap, $direction: column);
+
+    > li{
+      width: 100%;
+      margin: 0 0 8px 0;
+
+      &:hover{
+        cursor: pointer;
+        background-color: #f0f0f0;
+      }
+
+      > svg{
+        margin: 0 6px 0 0;
+      }
+    }
+  }
+}
