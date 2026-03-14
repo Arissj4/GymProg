@@ -34,7 +34,7 @@ function App() {
           <Sidebar user={testUser} handleNavigate={handleNavigate}/>
           <BrowserRouter>
             <Routes>
-              <Route index element={<Home />} />
+              <Route index element={<Home handleNavigate={handleNavigate} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/my-workouts" element={<UserExercisePrograms programs={['Program 1', 'Program 2', 'Program 3']} />} />
             </Routes>
