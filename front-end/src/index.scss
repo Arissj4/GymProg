@@ -33,7 +33,8 @@
             }
     
             #home{
-                @include costume-flex-box-container();
+                // @include costume-flex-box-container();
+                // height: 100%;
             }
         }
 

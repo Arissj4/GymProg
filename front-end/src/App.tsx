@@ -30,13 +30,13 @@ function App() {
           <PageHeader user={testUser} handleNavigate={handleNavigate}/>
         </div>
 
-        <div>
+        <div className='flex flex-row'>
           <Sidebar user={testUser} handleNavigate={handleNavigate}/>
           <BrowserRouter>
             <Routes>
               <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/user-exercise-programs" element={<UserExercisePrograms programs={['Program 1', 'Program 2', 'Program 3']} />} />
+              <Route path="/my-workouts" element={<UserExercisePrograms programs={['Program 1', 'Program 2', 'Program 3']} />} />
             </Routes>
           </BrowserRouter>
         </div>

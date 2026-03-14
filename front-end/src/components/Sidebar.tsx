@@ -14,9 +14,12 @@ type Props = {
 }
 
 const Sidebar = (props: Props) => {
-  function sidebarElementCreator(logo: IconProp, title: string, route: string): JSX.Element {
+  function sidebarElementCreator(id: string,logo: IconProp, title: string, route: string): JSX.Element {
     return (
-      <li onClick={() => props.handleNavigate(route)}>
+      <li key={id} 
+      className='border-b border-section-border-gray p-4'
+      onClick={() => props.handleNavigate(route)}
+      >
         <FontAwesomeIcon icon={logo} />
         {title}
       </li>
@@ -24,15 +27,15 @@ const Sidebar = (props: Props) => {
   }
 
   const sidebarElementsList = [
-    sidebarElementCreator(faHouse, 'Home', '/'),
-    sidebarElementCreator(faListOl, 'My Programs', '/user-exercise-programs'),
+    sidebarElementCreator('1', faHouse, 'Dashboard', '/'),
+    sidebarElementCreator('2', faListOl, 'My Workouts', '/my-workouts'),
   ]
 
   
   return (
-    <div id="sidebar" className='border-r border-section-border-gray p-3'>
+    <div id="sidebar" className='border-r border-section-border-gray py-6'>
       <ul id="sidebar-list">
-        <div>
+        {/* <div>
           <div>
             {props.user.image ? (
               <img src='{props.userImage}'/>
@@ -41,14 +44,14 @@ const Sidebar = (props: Props) => {
             )}
           </div>
 
-          {/* <div>
+          <div>
             {props.userFullName ? props.userFullName : 'Default User'}
-          </div> */}
+          </div>
 
           <div>
             <FontAwesomeIcon icon={faBars} />
           </div>
-        </div>
+        </div> */}
 
         <div>
           {sidebarElementsList}
