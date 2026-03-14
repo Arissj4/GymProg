@@ -5,11 +5,11 @@ import { faHouse, faCircleUser } from '@fortawesome/free-regular-svg-icons'
 import { faBars, faListOl } from "@fortawesome/free-solid-svg-icons"
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { useNavigate } from 'react-router'
+import type { User } from '../model/User'
 
 
 type Props = {
-  userImage?: string | null,
-  userFullName: string;
+  user: User;
   handleNavigate: (route: string) => void;
 }
 
@@ -30,11 +30,11 @@ const Sidebar = (props: Props) => {
 
   
   return (
-    <div id="sidebar" className='border-r'>
+    <div id="sidebar" className='border-r border-section-border-gray p-3'>
       <ul id="sidebar-list">
         <div>
           <div>
-            {props.userImage ? (
+            {props.user.image ? (
               <img src='{props.userImage}'/>
             ) : (
               <FontAwesomeIcon icon={faCircleUser} />

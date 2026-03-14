@@ -5,10 +5,19 @@ import UserExercisePrograms from './components/UserExercisePrograms'
 import Home from './components/Home'
 import Login from './components/Login'
 import Sidebar from './components/Sidebar'
+import type { User } from './model/User'
+import PageHeader from './components/PageHeader'
 
 
 function App() {
 
+  const testUser: User = {
+    id: 1,
+    name: 'Soheil',
+    email: "Soheil@gmail.com",
+    password: "password",
+    image: null,
+  }
 
   function handleNavigate(route: string): void{
     console.log(route);
@@ -16,15 +25,21 @@ function App() {
   
   return (
     <>
-      <div id="wrapper" className='rounded-xl'>
-        <Sidebar userFullName='Soheil Jamshidi' handleNavigate={handleNavigate}/>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/user-exercise-programs" element={<UserExercisePrograms programs={['Program 1', 'Program 2', 'Program 3']} />} />
-          </Routes>
-        </BrowserRouter>
+      <div id="wrapper" className='rounded-[30px]'>
+        <div>
+          <PageHeader user={testUser} handleNavigate={handleNavigate}/>
+        </div>
+
+        <div>
+          <Sidebar user={testUser} handleNavigate={handleNavigate}/>
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/user-exercise-programs" element={<UserExercisePrograms programs={['Program 1', 'Program 2', 'Program 3']} />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </div>
     </>
   )
