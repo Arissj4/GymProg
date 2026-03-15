@@ -10,11 +10,11 @@
         @include costume-flex-box-container($direction: column, $wrap: wrap);
         @include hidden-scrollbar();
         height: 100%;
-        min-width: 360px;
+        // min-width: 360px;
         max-width: 700px;
         background-color: $lightWrapperBackgroundColor;
         box-shadow: #f0f0f0 0px 0px 20px 5px;
-    
+
 
         > div {
             width: 100%;
@@ -30,8 +30,13 @@
                 max-width: 30%;
                 min-width: 30%;;
                 height: 100%;
+
+                @media (max-width: 520px) {
+                    max-width: 50px;
+                    min-width: 50px;
+                }
             }
-    
+
             #home{
                 // @include costume-flex-box-container();
                 // height: 100%;

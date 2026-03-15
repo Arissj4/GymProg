@@ -10,18 +10,19 @@ import type { User } from '../model/User'
 
 type Props = {
   user: User;
+  pageSize: number;
   handleNavigate: (route: string) => void;
 }
 
 const Sidebar = (props: Props) => {
   function sidebarElementCreator(id: string,logo: IconProp, title: string, route: string): JSX.Element {
     return (
-      <li key={id} 
+      <li key={id}
       className='border-b border-section-border-gray p-4'
       onClick={() => props.handleNavigate(route)}
       >
         <FontAwesomeIcon icon={logo} />
-        {title}
+        {props.pageSize > 520 ? title : ''}
       </li>
     )
   }
@@ -31,7 +32,7 @@ const Sidebar = (props: Props) => {
     sidebarElementCreator('2', faListOl, 'My Workouts', '/my-workouts'),
   ]
 
-  
+
   return (
     <div id="sidebar" className='border-r border-section-border-gray py-6'>
       <ul id="sidebar-list">
