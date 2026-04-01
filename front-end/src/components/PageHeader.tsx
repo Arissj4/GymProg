@@ -6,10 +6,10 @@ type Props = {
   handleNavigate: (route: string) => void,
 }
 
-const PageHeader = (props: Props) => {
+function PageHeader (props: Props) {
   return (
-    <div 
-    id='page-header' 
+    <div
+    id='page-header'
     className='border-b border-solid border-section-border-gray px-6 py-3 h-15'
     >
       <span className='text-[30px] font-[1000] text-orange-500'>

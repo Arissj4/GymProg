@@ -4,7 +4,7 @@ type Props = {
   handleNavigate: (route: string) => void;
 }
 
-const Home = (props: Props) => {
+function Home (props: Props) {
   return (
     <div id="home" className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
       <div>

@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import type { User } from './model/User'
 import PageHeader from './components/PageHeader'
 import { useEffect, useState } from 'react'
+import CreateWorkout from './components/CreateWorkout'
 
 
 function App() {
@@ -34,7 +35,6 @@ function App() {
   }
 
   function handleNavigate(route: string): void{
-    console.log(route);
     navigate(route);
   }
 
@@ -50,7 +50,9 @@ function App() {
           <Routes>
             <Route index element={<Home handleNavigate={handleNavigate} />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/my-workouts" element={<MyWrokouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} />} />
+            <Route path="/my-workouts" element={<MyWrokouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}>
+              <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
+            </Route>
           </Routes>
         </div>
       </div>

@@ -5,9 +5,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 type pageProps = {
   programs: string[],
   pageSize: number,
+  handleNavigate: (route: string) => void,
 }
 
-const MyWorkouts = (props: pageProps): ReactElement => {
+function MyWorkouts (props: pageProps): ReactElement {
   return (
     <div id="my-workouts" className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
       <div>
@@ -18,7 +19,7 @@ const MyWorkouts = (props: pageProps): ReactElement => {
 
       <div className='flex flex-col items-center mt-6'>
         <button
-          onClick={() => {}}
+          onClick={() => {props.handleNavigate('/my-workouts/create-workout')}}
           className='border p-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:cursor-pointer'
         >
           <FontAwesomeIcon icon={faPlus} className='mr-1.5'/>

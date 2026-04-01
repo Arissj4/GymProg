@@ -2,4 +2,6 @@
 
 @theme {
   --color-section-border-gray: #e7e7e7;
+
+  --breakpoint-ssm: 10rem;
 }

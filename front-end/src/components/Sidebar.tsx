@@ -14,7 +14,7 @@ type Props = {
   handleNavigate: (route: string) => void;
 }
 
-const Sidebar = (props: Props) => {
+function Sidebar (props: Props) {
   function sidebarElementCreator(id: string,logo: IconProp, title: string, route: string): JSX.Element {
     return (
       <li key={id}
@@ -34,7 +34,7 @@ const Sidebar = (props: Props) => {
 
 
   return (
-    <div id="sidebar" className='border-r border-section-border-gray py-6'>
+    <div id="sidebar" className='ssm:w-12.5 border-r border-section-border-gray py-6'>
       <ul id="sidebar-list">
         {/* <div>
           <div>
