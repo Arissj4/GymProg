@@ -34,13 +34,25 @@ function App() {
     image: null,
   }
 
+  const [message, setMessage] = useState('Loading...')
+
+  useEffect(() => {
+    fetch('/api/hello/')
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message))
+      .catch(() => setMessage('Failed to connect to backend'))
+  }, [])
+
   function handleNavigate(route: string): void{
     navigate(route);
   }
 
   return (
     <>
-      <div id="wrapper" className='rounded-[30px]'>
+    <h1>React + Vite + Django + Nginx</h1>
+    <p>{message}</p>
+
+      {/* <div id="wrapper" className='rounded-[30px]'>
         <div>
           <PageHeader user={testUser} handleNavigate={handleNavigate}/>
         </div>
@@ -55,7 +67,7 @@ function App() {
             </Route>
           </Routes>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
