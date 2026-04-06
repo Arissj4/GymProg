@@ -1,7 +1,7 @@
 import { BrowserRouter, useNavigate, Route, Routes } from 'react-router'
 import './App.css'
 import "./index.scss"
-import MyWrokouts from './components/MyWorkouts'
+import MyWorkouts from './components/MyWorkouts'
 import Home from './components/Home'
 import Login from './components/Login'
 import Sidebar from './components/Sidebar'
@@ -49,10 +49,7 @@ function App() {
 
   return (
     <>
-    <h1>React + Vite + Django + Nginx</h1>
-    <p>{message}</p>
-
-      {/* <div id="wrapper" className='rounded-[30px]'>
+      <div id="wrapper" className='rounded-[30px]'>
         <div>
           <PageHeader user={testUser} handleNavigate={handleNavigate}/>
         </div>
@@ -62,12 +59,11 @@ function App() {
           <Routes>
             <Route index element={<Home handleNavigate={handleNavigate} />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/my-workouts" element={<MyWrokouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}>
-              <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
-            </Route>
+            <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
+            <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
           </Routes>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }
