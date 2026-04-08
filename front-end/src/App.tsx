@@ -36,11 +36,14 @@ function App() {
 
   const [message, setMessage] = useState('Loading...')
 
-  useEffect(() => {
-    fetch('/api/hello/')
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch(() => setMessage('Failed to connect to backend'))
+  useEffect(function getUsersInfo() {
+    try{
+      fetch('/api/users/')
+      .then(res => res.json())
+      .then(data => console.log(data))
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   function handleNavigate(route: string): void{
