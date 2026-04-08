@@ -5,6 +5,7 @@ type Props = {}
 type userInfo = {
   name: string,
   email: string,
+  password: string,
 }
 
 const SignIn = (props: Props) => {
@@ -12,6 +13,7 @@ const SignIn = (props: Props) => {
   const [user, setUser] = useState<userInfo>({
     name: '',
     email: '',
+    password: '',
   })
 
 
@@ -38,6 +40,7 @@ const SignIn = (props: Props) => {
         <form>
           <input type='text' placeholder='Name' onChange={(e) => setUser({...user, name: e.target.value})}/>
           <input type='email' placeholder='Email' onChange={(e) => setUser({...user, email: e.target.value})}/>
+          <input type='password' placeholder='Password' onChange={(e) => setUser({...user, password: e.target.value})}/>
           <button type='submit' onClick={(e) => handleSubmit(e)}>Submit</button>
         </form>
       </div>
