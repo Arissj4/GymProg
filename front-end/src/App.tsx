@@ -9,6 +9,8 @@ import type { User } from './model/User'
 import PageHeader from './components/PageHeader'
 import { useEffect, useState } from 'react'
 import CreateWorkout from './components/CreateWorkout'
+import SignIn from './components/SignIn'
+import Profile from './components/Profile'
 
 
 function App() {
@@ -62,6 +64,8 @@ function App() {
           <Routes>
             <Route index element={<Home handleNavigate={handleNavigate} />} />
             <Route path="/login" element={<Login />} />
+            <Route path='/createuser' element={<SignIn />} />
+            <Route path="/profile" element={<Profile handleNavigate={handleNavigate}/>} />
             <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
             <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
           </Routes>

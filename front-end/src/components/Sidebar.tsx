@@ -28,6 +28,7 @@ function Sidebar (props: Props) {
   }
 
   const sidebarElementsList = [
+    sidebarElementCreator('0', faCircleUser, 'Profile', '/profile'),
     sidebarElementCreator('1', faHouse, 'Dashboard', '/'),
     sidebarElementCreator('2', faListOl, 'My Workouts', '/my-workouts'),
   ]
