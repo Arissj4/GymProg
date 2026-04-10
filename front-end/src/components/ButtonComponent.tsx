@@ -9,11 +9,11 @@ const ButtonComponent = (props: Props) => {
 
   const getButtonType = () => {
     switch (props.model.type){
-      case "accept":
-        return "border p-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:cursor-pointer"
+      case "orange":
+        return `border p-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:cursor-pointer w-[${props.model.size}]`
         break;
-      case "cancel":
-        return "border p-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:cursor-pointer"
+      case "white":
+        return `border border-[#d4d4d8] p-2 rounded-xl bg-white text-[#454856] hover:bg-gray-100/70 hover:cursor-pointer w-[${props.model.size}]`
         break;
     }
   }
@@ -22,7 +22,7 @@ const ButtonComponent = (props: Props) => {
     <div>
       <button
         onClick={props.model.clickEvent}
-        className='border p-2 rounded-xl bg-white text-gray-500 hover:bg-gray-100 hover:cursor-pointer'
+        className={getButtonType()}
       >
         {props.model.text}
       </button>
