@@ -21,7 +21,6 @@
 
             #page-header{
                 @include costume-flex-box-container($align: center);
-                height: 100%;
             }
 
             #sidebar{

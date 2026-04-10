@@ -1,16 +1,16 @@
 import { BrowserRouter, useNavigate, Route, Routes } from 'react-router'
 import './App.css'
 import "./index.scss"
-import MyWorkouts from './components/MyWorkouts'
-import Home from './components/Home'
-import Login from './components/Login'
-import Sidebar from './components/Sidebar'
+import MyWorkouts from './pages/MyWorkouts'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Sidebar from './pages/Sidebar'
 import type { User } from './model/User'
-import PageHeader from './components/PageHeader'
+import PageHeader from './pages/PageHeader'
 import { useEffect, useState } from 'react'
-import CreateWorkout from './components/CreateWorkout'
-import SignIn from './components/SignIn'
-import Profile from './components/Profile'
+import CreateWorkout from './pages/CreateWorkout'
+import SignIn from './pages/SignIn'
+import Profile from './pages/Profile'
 
 
 function App() {
@@ -70,20 +70,23 @@ function App() {
           <PageHeader user={user} handleNavigate={handleNavigate}/>
         </div>
 
-        <div className='flex flex-row'>
-          {user.authenticated ?
-            <Sidebar user={user} handleNavigate={handleNavigate} pageSize={windowSize}/> :
-            <div></div>
-          }
-          <Routes>
-            <Route index element={<Home handleNavigate={handleNavigate} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path='/createuser' element={<SignIn />} />
-            <Route path="/profile" element={<Profile handleNavigate={handleNavigate}/>} />
-            <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
-            <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
-          </Routes>
-        </div>
+        {user.authenticated ?
+          <div className='flex flex-row'>
+            <Sidebar user={user} handleNavigate={handleNavigate} pageSize={windowSize}/>
+            <Routes>
+              <Route index element={<Home handleNavigate={handleNavigate} />} />
+              <Route path="/profile" element={<Profile handleNavigate={handleNavigate}/>} />
+              <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
+              <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
+            </Routes>
+          </div> :
+          <div className='flex flex-row'>
+            <Routes>
+              <Route path="/login" element={<Login handleNavigate={handleNavigate} />} />
+              <Route path='/createuser' element={<SignIn />} />
+            </Routes>
+          </div>
+        }
       </div>
     </>
   )
