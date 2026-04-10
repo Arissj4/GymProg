@@ -26,6 +26,9 @@ if (process.env.NODE_ENV === "production"){
   app.set("trust proxy", 1);
 }
 
+console.log("Session_secret:", process.env.SESSION_SECRET);
+console.log("Session_secret exists:", Boolean(process.env.SESSION_SECRET));
+
 app.use(
   session({
     store: new PgStore({
@@ -45,6 +48,11 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  console.log("REQ: ", req.method, req.originalUrl);
+  next();
+});
 
 
 app.post("/api/auth/register", async (req, res) => {
@@ -76,6 +84,7 @@ app.post("/api/auth/register", async (req, res) => {
         id: result.rows[0].id,
         name: result.rows[0].name,
         email: result.rows[0].email,
+        authenticated: true,
       };
 
       res.status(201).json({ user: req.session.user});
@@ -113,6 +122,7 @@ app.post("/api/auth/login", async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        authenticated: true,
       };
 
       res.json({ user: req.session.user });

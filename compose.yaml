@@ -29,6 +29,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: myprog
+      SESSION_SECRET: dev-only-long-random-secret-change-me
     expose:
       - "5000"
     depends_on:

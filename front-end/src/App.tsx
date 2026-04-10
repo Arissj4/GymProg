@@ -15,6 +15,36 @@ import Profile from './components/Profile'
 
 function App() {
 
+  let [user, setUser] = useState<User>({id: 0, name: "MyProg", email: "", authenticated: false});
+
+  useEffect(() => {
+    async function checkUserLogin() {
+      try {
+        const res = await fetch("/api/auth/user");
+
+        if (!res.ok) {
+          handleNavigate("/Login");
+          return;
+        }
+
+        const data = await res.json();
+
+        console.log("------User-----");
+        console.log(data);
+        console.log("------User-----");
+
+        setUser(data.user ?? data);
+        handleNavigate("/");
+      } catch (error) {
+        console.error(error);
+        handleNavigate("/Login");
+      }
+    }
+
+    checkUserLogin();
+  }, []);
+
+
   let navigate = useNavigate();
   let [windowSize, setWindowSize] = useState(window.innerWidth);
 
@@ -28,25 +58,6 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, [])
 
-  const testUser: User = {
-    id: 1,
-    name: 'Soheil',
-    email: "Soheil@gmail.com",
-    password: "password",
-    image: null,
-  }
-
-  const [message, setMessage] = useState('Loading...')
-
-  useEffect(function getUsersInfo() {
-    try{
-      fetch('/api/users/')
-      .then(res => res.json())
-      .then(data => console.log(data))
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
 
   function handleNavigate(route: string): void{
     navigate(route);
@@ -56,11 +67,14 @@ function App() {
     <>
       <div id="wrapper" className='rounded-[30px]'>
         <div>
-          <PageHeader user={testUser} handleNavigate={handleNavigate}/>
+          <PageHeader user={user} handleNavigate={handleNavigate}/>
         </div>
 
         <div className='flex flex-row'>
-          <Sidebar user={testUser} handleNavigate={handleNavigate} pageSize={windowSize}/>
+          {user.authenticated ?
+            <Sidebar user={user} handleNavigate={handleNavigate} pageSize={windowSize}/> :
+            <div></div>
+          }
           <Routes>
             <Route index element={<Home handleNavigate={handleNavigate} />} />
             <Route path="/login" element={<Login />} />
