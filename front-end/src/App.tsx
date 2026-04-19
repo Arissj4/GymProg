@@ -1,4 +1,4 @@
-import { BrowserRouter, useNavigate, Route, Routes } from 'react-router'
+import { BrowserRouter, useNavigate, Route, Routes, Router, useLoaderData, useLocation } from 'react-router'
 import './App.css'
 import "./index.scss"
 import MyWorkouts from './pages/MyWorkouts'
@@ -16,10 +16,20 @@ import Profile from './pages/Profile'
 function App() {
 
   let [user, setUser] = useState<User>({id: 0, name: "MyProg", email: "", authenticated: false});
+  const location = useLocation();
 
   useEffect(() => {
     async function checkUserLogin() {
       try {
+
+        const currentPath = location?.pathname;
+        const excludeRoutes = ['/login', '/createuser'];
+        const isExcludedRoute = excludeRoutes.includes(currentPath);
+        if (isExcludedRoute) {
+          return;
+        }
+
+
         const res = await fetch("/api/auth/user");
 
         if (!res.ok) {

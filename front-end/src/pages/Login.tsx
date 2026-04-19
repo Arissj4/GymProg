@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { ButtonModel } from '../interfaces/Button';
 import type { Authentication } from '../interfaces/AuthenticationInterface';
 import * as LoginController from '../controllers/LoginController';
-import { FormControl, TextField } from '@mui/material';
+import { FormControl, TextField, Link } from '@mui/material';
 
 
 type Props = {
@@ -33,14 +33,14 @@ function Login ( props: Props) {
   const loginButton: ButtonModel = {
     text: "Login",
     type: "orange",
-    size: "200px",
+    style: { width: "220px", marginBottom: "10px" },
     clickEvent: () => handleLoginClick(),
   };
 
   const registerButton: ButtonModel = {
     text: "Register",
     type: "white",
-    size: "200px",
+    style: { width: "220px" },
     clickEvent: () => LoginController.handleRegisterClick(),
   }
 
@@ -65,7 +65,7 @@ function Login ( props: Props) {
             />
 
             <TextField
-              className='costume-input w-7/10 border my-4!'
+              className='costume-input w-7/10 border mt-4! mb-2!'
               id="outlined-required"
               label="Password"
               type="password"
@@ -75,14 +75,14 @@ function Login ( props: Props) {
             />
 
             <div className='flex items-center justify-between w-7/10 m-1'>
-              <span>
+              <Link href='/createuser' underline='none' className='text-sm! text-gray-500!'>
                 Do not have an account?
-              </span>
+              </Link>
             </div>
           </FormControl>
         </div>
 
-        <div className='flex justify-center bg-amber-800'>
+        <div className='flex flex-col justify-center items-center'>
           <ButtonComponent model={loginButton}/>
           <ButtonComponent model={registerButton}/>
         </div>

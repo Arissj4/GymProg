@@ -19,11 +19,11 @@ const ButtonComponent = (props: Props) => {
   }
 
   return (
-    <div>
+    <div className='flex w-full justify-center items-center'>
       <button
         onClick={props.model.clickEvent}
         className={getButtonType()}
-        style={{ width: props.model.size }}
+        style={props.model.style}
       >
         {props.model.text}
       </button>
