@@ -1,5 +1,5 @@
 import React from 'react'
-import { getUserFullName, type User } from '../model/User'
+import { getUserFullName, type User } from '../interfaces/User'
 
 type Props = {
   user: User,

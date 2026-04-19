@@ -5,7 +5,7 @@ import { faHouse, faCircleUser } from '@fortawesome/free-regular-svg-icons'
 import { faBars, faListOl } from "@fortawesome/free-solid-svg-icons"
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { useNavigate } from 'react-router'
-import type { User } from '../model/User'
+import type { User } from '../interfaces/User'
 
 
 type Props = {

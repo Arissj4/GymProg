@@ -1,5 +1,5 @@
 import React from 'react'
-import type { ButtonModel } from "../model/Button";
+import type { ButtonModel } from "../interfaces/Button";
 
 type Props = {
   model: ButtonModel,

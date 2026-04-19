@@ -1,7 +1,8 @@
 import React from 'react'
 import ButtonComponent from '../components/ButtonComponent';
 import { useState } from 'react';
-import type { ButtonModel } from '../model/Button';
+import type { ButtonModel } from '../interfaces/Button';
+import * as LoginController from '../controllers/LoginController';
 
 type Props = {
   handleNavigate: (route: string) => void;
@@ -15,24 +16,15 @@ function Login ( props: Props) {
     text: "Login",
     type: "orange",
     size: "200px",
-    clickEvent: handleLoginClick,
+    clickEvent: () => LoginController.handleLoginClick({email: "", password: ""}),
   });
 
   const [registerButton, setRegisterButton] = useState<ButtonModel>({
     text: "Register",
     type: "white",
     size: "200px",
-    clickEvent: handleRegisterClick,
+    clickEvent: () => LoginController.handleRegisterClick(),
   })
-
-  // Functions Section
-  function handleLoginClick(): void {
-    console.log("Login button clicked");
-  }
-
-  function handleRegisterClick(): void {
-    console.log("Register button clicked");
-  }
 
   // Hooks Section
 
