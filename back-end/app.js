@@ -96,6 +96,7 @@ app.post("/api/auth/register", async (req, res) => {
 
 app.post("/api/auth/login", async (req, res) => {
   try{
+    console.log(req.body)
     const { email, password } =  req.body;
 
     const result = await pool.query(
@@ -106,7 +107,7 @@ app.post("/api/auth/login", async (req, res) => {
     const user = result.rows[0];
 
     if(!user){
-      res.status(401).json({ error: "User not found" });
+      res.status(404).json({ error: "User not found" });
     }
 
     const ok = await bcrypt.compare(password, user.password_hash);
@@ -125,10 +126,10 @@ app.post("/api/auth/login", async (req, res) => {
         authenticated: true,
       };
 
-      res.json({ user: req.session.user });
+      res.json({ user: res.session.user });
     });
   } catch (error){
-    req.status(500).json({ error: "Login failed" });
+    res.status(500).json({ error: "Login failed" });
   }
 });
 

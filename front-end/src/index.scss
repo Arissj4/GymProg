@@ -15,6 +15,14 @@
         background-color: $lightWrapperBackgroundColor;
         box-shadow: #f0f0f0 0px 0px 20px 5px;
 
+        // Costume classes
+
+        .costume-input{
+            > div {
+                border-radius: 6px;
+            }
+        }
+
 
         > div {
             width: 100%;

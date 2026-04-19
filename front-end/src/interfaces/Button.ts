@@ -4,5 +4,5 @@ export interface ButtonModel {
   text: string,
   type: ButtonType,
   size?: string,
-  clickEvent: () => (Promise<void> | void),
+  clickEvent: () => void,
 }

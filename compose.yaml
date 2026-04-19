@@ -4,22 +4,28 @@ services:
     container_name: myprog-frontend
     expose:
       - "5173"
-    develop:
-      watch:
-        - action: sync
-          path: ./front-end
-          target: /app
-          ignore:
-            - node_modules/
-            - dist/
-        - action: rebuild
-          path: ./front-end/package.json
-        - action: rebuild
-          path: ./front-end/package-lock.json
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: ./front-end
+    #       target: /app
+    #       ignore:
+    #         - node_modules/
+    #         - dist/
+    #     - action: rebuild
+    #       path: ./front-end/package.json
+    #     - action: rebuild
+    #       path: ./front-end/package-lock.json
 
   backend:
     build: ./back-end
     container_name: myprog-backend
+    working_dir: /app
     command: npm run dev
     environment:
       PORT: 5000
@@ -30,6 +36,9 @@ services:
       DB_PASSWORD: postgres
       DB_NAME: myprog
       SESSION_SECRET: dev-only-long-random-secret-change-me
+    volumes:
+      - ./back-end:/app
+      - /app/node_modules
     expose:
       - "5000"
     depends_on:
@@ -46,20 +55,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    develop:
-      watch:
-        - action: sync
-          path: ./back-end
-          target: /app
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: ./back-end/package.json
-        - action: rebuild
-          path: ./back-end/package-lock.json
-        - action: sync+restart
-          path: ./back-end/.env
-          target: /app/.env
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: ./back-end
+    #       target: /app
+    #       ignore:
+    #         - node_modules/
+    #     - action: rebuild
+    #       path: ./back-end/package.json
+    #     - action: rebuild
+    #       path: ./back-end/package-lock.json
+    #     - action: sync+restart
+    #       path: ./back-end/.env
+    #       target: /app/.env
 
   db:
     image: postgres:18-alpine
