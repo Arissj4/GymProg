@@ -15,7 +15,3 @@ export async function handleLogin(loginInfo: Authentication): Promise<number> {
     return 500;
   }
 }
-
-export function handleRegisterClick(): void {
-  console.log("Register button clicked");
-}

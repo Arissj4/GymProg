@@ -72,12 +72,13 @@ app.post("/api/auth/register", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 12);
 
     const result = await pool.query(
-      `INSERT INTO users (name, email, password)
+      `INSERT INTO users (name, email, password_hash)
       VALUES ($1, $2, $3)
       RETURNING id, name, email, created_at`,
       [name, email, password]
     );
 
+    console.log(result)
     req.session.regenerate(err => {
       if (err) return res.status(500).json({ error: "Session error"});
       req.session.user = {
@@ -90,7 +91,7 @@ app.post("/api/auth/register", async (req, res) => {
       res.status(201).json({ user: req.session.user});
     });
   } catch (error){
-    req.status(500).json({ error: "Registration failed" });
+    res.status(500).json({ error: "Registration failed" });
   }
 });
 

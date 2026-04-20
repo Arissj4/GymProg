@@ -41,7 +41,7 @@ function Login ( props: Props) {
     text: "Register",
     type: "white",
     style: { width: "220px" },
-    clickEvent: () => LoginController.handleRegisterClick(),
+    clickEvent: () => props.handleNavigate("/createuser"),
   }
 
   return (

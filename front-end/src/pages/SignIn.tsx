@@ -1,4 +1,9 @@
+import { FormControl, Link, TextField } from '@mui/material'
 import React, { use, useState } from 'react'
+import type { ButtonModel } from '../interfaces/Button'
+import ButtonComponent from '../components/ButtonComponent'
+import * as SignInController from '../controllers/SignInController'
+import type { Authentication } from '../interfaces/AuthenticationInterface'
 
 type Props = {}
 
@@ -10,39 +15,67 @@ type userInfo = {
 
 const SignIn = (props: Props) => {
 
-  const [user, setUser] = useState<userInfo>({
+  const [signinInfo, setSigninInfo] = useState<userInfo>({
     name: '',
     email: '',
     password: '',
   })
 
-
-  const handleSubmit = (e: any) =>{
-    e.preventDefault;
-    try{
-      fetch(`/api/users/`, {
-        method: "POST",
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      })
-      .then(res => res.json())
-      .then(data => console.log(data))
-    } catch (error) {
-      return;
-    }
+  const registerButton: ButtonModel = {
+    text: "Register",
+    type: "white",
+    style: { width: "220px" },
+    clickEvent: () => SignInController.handleRegister(signinInfo),
   }
 
   return (
     <div id='create-user' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
-      <div>
-        <form>
-          <input type='text' placeholder='Name' onChange={(e) => setUser({...user, name: e.target.value})}/>
-          <input type='email' placeholder='Email' onChange={(e) => setUser({...user, email: e.target.value})}/>
-          <input type='password' placeholder='Password' onChange={(e) => setUser({...user, password: e.target.value})}/>
-          <button type='submit' onClick={(e) => handleSubmit(e)}>Submit</button>
-        </form>
+      <div className='flex-auto justify-center h-max'>
+        <div className='mb-4 flex flex-col items-center justify-center'>
+
+          <FormControl
+            className='flex items-center justify-between w-5/10 m-1'
+            variant='outlined'
+          >
+
+            <TextField
+              className='costume-input w-7/10 border my-4!'
+              id="outlined-required"
+              label="Name"
+              type="text"
+              value={signinInfo?.name}
+              onChange={(e) => setSigninInfo({...signinInfo, name: e.target.value})}
+            />
+
+            <TextField
+              className='costume-input w-7/10 border my-4!'
+              id="outlined-required"
+              label="Email"
+              type="email"
+              value={signinInfo?.email}
+              onChange={(e) => setSigninInfo({...signinInfo, email: e.target.value})}
+            />
+
+            <TextField
+              className='costume-input w-7/10 border mt-4! mb-2!'
+              id="outlined-required"
+              label="Password"
+              type="password"
+              value={signinInfo.password}
+              onChange={(e) => setSigninInfo({...signinInfo, password: e.target.value})}
+            />
+
+            <div className='flex items-center justify-between w-7/10 m-1'>
+              <Link href='/createuser' underline='none' className='text-sm! text-gray-500!'>
+                Do not have an account?
+              </Link>
+            </div>
+          </FormControl>
+        </div>
+
+        <div className='flex flex-col justify-center items-center'>
+          <ButtonComponent model={registerButton}/>
+        </div>
       </div>
     </div>
   )
