@@ -5,7 +5,9 @@ import ButtonComponent from '../components/ButtonComponent'
 import * as SignInController from '../controllers/SignInController'
 import type { Authentication } from '../interfaces/AuthenticationInterface'
 
-type Props = {}
+type Props = {
+  handleNavigate: (route: string) => void;
+}
 
 type userInfo = {
   name: string,
@@ -21,11 +23,28 @@ const SignIn = (props: Props) => {
     password: '',
   })
 
+  const handleRegisterClick = async (): Promise<void> => {
+    try {
+      const status = await SignInController.handleRegister(signinInfo);
+      if(status === 200){
+        alert("User registered successfully");
+        props.handleNavigate("/login");
+      } else if(status === 409){
+        alert("User already exists");
+      } else {
+        alert("An error occurred while registering");
+      }
+    } catch (error) {
+      console.error("Error occurred while registering:", error);
+      alert("An error occurred while registering");
+    }
+  }
+
   const registerButton: ButtonModel = {
     text: "Register",
     type: "white",
     style: { width: "220px" },
-    clickEvent: () => SignInController.handleRegister(signinInfo),
+    clickEvent: () => handleRegisterClick(),
   }
 
   return (
@@ -64,12 +83,6 @@ const SignIn = (props: Props) => {
               value={signinInfo.password}
               onChange={(e) => setSigninInfo({...signinInfo, password: e.target.value})}
             />
-
-            <div className='flex items-center justify-between w-7/10 m-1'>
-              <Link href='/createuser' underline='none' className='text-sm! text-gray-500!'>
-                Do not have an account?
-              </Link>
-            </div>
           </FormControl>
         </div>
 

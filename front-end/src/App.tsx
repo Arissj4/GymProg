@@ -93,7 +93,7 @@ function App() {
           <div className='flex flex-row'>
             <Routes>
               <Route path="/login" element={<Login handleNavigate={handleNavigate} />} />
-              <Route path='/createuser' element={<SignIn />} />
+              <Route path='/createuser' element={<SignIn handleNavigate={handleNavigate}/>} />
             </Routes>
           </div>
         }

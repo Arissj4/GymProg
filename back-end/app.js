@@ -76,7 +76,7 @@ app.post("/api/auth/register", async (req, res) => {
       `INSERT INTO users (name, email, password_hash)
       VALUES ($1, $2, $3)
       RETURNING id, name, email, created_at`,
-      [name, email, password]
+      [name, email, passwordHash]
     );
 
     console.log(result)
@@ -112,7 +112,9 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    console.log(user.password_hash)
     const ok = await bcrypt.compare(password, user.password_hash);
+    console.log(ok)
 
     if(!ok){
       return res.status(401).json({ error: "Invalid email or password" });
