@@ -20,14 +20,15 @@ function Login ( props: Props) {
 
   async function handleLoginClick(): Promise<void> {
     const user = await LoginController.handleLogin(loginInfo);
-    if(user === 200){
+    console.log(user)
+    /* if(user === 200){
       localStorage.setItem("user", JSON.stringify(user));
       props.handleNavigate("/");
     } else if(user === 401){
       setLoginStatus(true);
     } else {
       alert("An error occurred while logging in");
-    }
+    } */
   }
 
   const loginButton: ButtonModel = {
