@@ -34,6 +34,7 @@ app.use(
     store: new PgStore({
       pool,
       tableName: "user_sessions",
+      createTableIfMissing: true,
     }),
     name: process.env.NODE_ENV === "production" ? "__Host-myprog.sid" : "myprog.sid",
     secret: process.env.SESSION_SECRET,
@@ -41,7 +42,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.send.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7,
       path: "/",
