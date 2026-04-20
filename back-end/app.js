@@ -79,7 +79,6 @@ app.post("/api/auth/register", async (req, res) => {
       [name, email, passwordHash]
     );
 
-    console.log(result)
     req.session.regenerate(err => {
       if (err) return res.status(500).json({ error: "Session error"});
       req.session.user = {
@@ -98,7 +97,6 @@ app.post("/api/auth/register", async (req, res) => {
 
 app.post("/api/auth/login", async (req, res) => {
   try{
-    console.log(req.body)
     const { email, password } =  req.body;
 
     const result = await pool.query(
@@ -112,9 +110,7 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    console.log(user.password_hash)
     const ok = await bcrypt.compare(password, user.password_hash);
-    console.log(ok)
 
     if(!ok){
       return res.status(401).json({ error: "Invalid email or password" });

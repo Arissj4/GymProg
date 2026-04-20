@@ -1,13 +1,12 @@
 import type { Authentication } from "../interfaces/AuthenticationInterface";
 import AuthenticationModel from "../models/AuthenticationModel";
 
-export async function handleRegister(user: Authentication): Promise<number> {
+export async function handleRegister(user: Authentication): Promise<object> {
   try {
     const result = await AuthenticationModel.register(user);
-    console.log("User registered:", result);
-    return 200;
+    return result;
   } catch (error) {
     console.error("Error occurred while registering:", error);
-    return 500;
+    return { error: "An error occurred while registering" };
   }
 }

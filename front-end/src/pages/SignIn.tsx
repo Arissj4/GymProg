@@ -26,10 +26,10 @@ const SignIn = (props: Props) => {
   const handleRegisterClick = async (): Promise<void> => {
     try {
       const status = await SignInController.handleRegister(signinInfo);
-      if(status === 200){
+      if(status && status?.user){
         alert("User registered successfully");
         props.handleNavigate("/login");
-      } else if(status === 409){
+      } else if(status && status?.error === "User already exists"){
         alert("User already exists");
       } else {
         alert("An error occurred while registering");
