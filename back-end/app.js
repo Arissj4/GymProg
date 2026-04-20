@@ -109,13 +109,13 @@ app.post("/api/auth/login", async (req, res) => {
     const user = result.rows[0];
 
     if(!user){
-      res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const ok = await bcrypt.compare(password, user.password_hash);
 
     if(!ok){
-      res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
 
     req.session.regenerate( err => {
@@ -128,7 +128,7 @@ app.post("/api/auth/login", async (req, res) => {
         authenticated: true,
       };
 
-      res.json({ user: res.session.user });
+      res.json({ user: req.session.user });
     });
   } catch (error){
     res.status(500).json({ error: "Login failed" });
