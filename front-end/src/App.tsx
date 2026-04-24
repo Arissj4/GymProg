@@ -25,6 +25,10 @@ function App() {
       try {
         const currentPath = location?.pathname;
 
+        if(location.pathname === "/createuser" || location.pathname === "/login"){
+          return;
+        }
+
         if (checkedLogin.current) return;
         checkedLogin.current = true;
 

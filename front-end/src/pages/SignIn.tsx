@@ -1,9 +1,10 @@
-import { FormControl, Link, TextField } from '@mui/material'
+import { Alert, FormControl, Link, TextField } from '@mui/material'
 import React, { use, useState } from 'react'
 import type { ButtonModel } from '../interfaces/Button'
 import ButtonComponent from '../components/ButtonComponent'
 import AuthenticationController from '../controllers/AuthenticationController'
 import type { Authentication } from '../interfaces/AuthenticationInterface'
+import ErrorComponent from '../components/ErrorComponent'
 
 type Props = {
   handleNavigate: (route: string) => void;
@@ -17,6 +18,12 @@ type userInfo = {
 
 const SignIn = (props: Props) => {
 
+  const [pageLoading, setPageLoading] = useState<Boolean>(false);
+  const [pageError, setPageError] = useState<Boolean>(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
+  const [showUserExistsMessage, setShowUserExistsMessage] = useState<Boolean>(false);
+
+
   const [signinInfo, setSigninInfo] = useState<userInfo>({
     name: '',
     email: '',
@@ -25,18 +32,21 @@ const SignIn = (props: Props) => {
 
   const handleRegisterClick = async (): Promise<void> => {
     try {
+      setPageLoading(true);
       const status = await AuthenticationController.handleRegister(signinInfo);
-      if(status && status?.user){
-        alert("User registered successfully");
+      if(status?.user){
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000);
         props.handleNavigate("/login");
-      } else if(status && status?.error === "User already exists"){
-        alert("User already exists");
-      } else {
-        alert("An error occurred while registering");
+      } else if(status?.error){
+        setShowUserExistsMessage(true);
       }
     } catch (error) {
-      console.error("Error occurred while registering:", error);
-      alert("An error occurred while registering");
+      setPageError(true);
+    } finally {
+      setPageLoading(false);
     }
   }
 
@@ -51,6 +61,21 @@ const SignIn = (props: Props) => {
     <div id='create-user' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
       <div className='flex-auto justify-center h-max'>
         <div className='mb-4 flex flex-col items-center justify-center'>
+
+          {showSuccessMessage ?
+          <Alert>
+            User created successfully! Redirecting to login...
+          </Alert>
+          : null}
+          {showUserExistsMessage && <p className='text-red-500 mb-2'>User already exists. Please try again with a different email.</p>}
+          {pageError ?
+            <ErrorComponent
+              text="An error occurred while creating the user. Please try again."
+              activated={pageError}
+              onClose={() => setPageError(false)}
+            />
+          : null}
+
 
           <FormControl
             className='flex items-center justify-between w-5/10 m-1'
