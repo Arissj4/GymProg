@@ -21,7 +21,8 @@ const SignIn = (props: Props) => {
   const [pageLoading, setPageLoading] = useState<Boolean>(false);
   const [pageError, setPageError] = useState<Boolean>(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
-  const [showUserExistsMessage, setShowUserExistsMessage] = useState<Boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
+  const [errorMessageText, setErrorMessageText] = useState<string>("");
 
 
   const [signinInfo, setSigninInfo] = useState<userInfo>({
@@ -34,14 +35,18 @@ const SignIn = (props: Props) => {
     try {
       setPageLoading(true);
       const status = await AuthenticationController.handleRegister(signinInfo);
+      console.log(status)
       if(status?.user){
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 3000);
+        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        await delay(1500);
         props.handleNavigate("/login");
       } else if(status?.error){
-        setShowUserExistsMessage(true);
+        setShowErrorMessage(true);
+        setErrorMessageText(status?.error);
       }
     } catch (error) {
       setPageError(true);
@@ -67,7 +72,15 @@ const SignIn = (props: Props) => {
             User created successfully! Redirecting to login...
           </Alert>
           : null}
-          {showUserExistsMessage && <p className='text-red-500 mb-2'>User already exists. Please try again with a different email.</p>}
+
+          {showErrorMessage ?
+          <Alert
+            severity='error'
+          >
+            {errorMessageText}
+          </Alert>
+          : null}
+
           {pageError ?
             <ErrorComponent
               text="An error occurred while creating the user. Please try again."
