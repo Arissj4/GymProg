@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ButtonComponent from '../components/ButtonComponent';
 import { useState } from 'react';
 import type { ButtonModel } from '../interfaces/Button';
 import type { Authentication } from '../interfaces/AuthenticationInterface';
-import * as LoginController from '../controllers/LoginController';
-import { FormControl, TextField, Link } from '@mui/material';
+import AuthenticationController from '../controllers/AuthenticationController';
+import { FormControl, TextField, Link, Alert, Backdrop, CircularProgress } from '@mui/material';
+import ErrorComponent from '../components/ErrorComponent';
+import LoadComponent from '../components/LoadComponent';
 
 
 type Props = {
@@ -15,21 +17,40 @@ type Props = {
 function Login ( props: Props) {
 
   // Variables Section
+  const [pageLoading, setPageLoading] = useState<Boolean>(false);
+  const [pageError, setPageError] = useState<Boolean>(false);
+
   const [loginStatus, setLoginStatus] = useState<Boolean>(false);
+  const [showLoginErrorAlert, setShowLoginErrorAlert] = useState<Boolean>(false);
   const [loginInfo, setLoginInfo] = useState<Authentication>({email: "", password: ""});
 
   async function handleLoginClick(): Promise<void> {
-    const user = await LoginController.handleLogin(loginInfo);
-    console.log(user)
-    /* if(user === 200){
-      localStorage.setItem("user", JSON.stringify(user));
-      props.handleNavigate("/");
-    } else if(user === 401){
-      setLoginStatus(true);
-    } else {
-      alert("An error occurred while logging in");
-    } */
+    try{
+      setPageLoading(true);
+      const user = await AuthenticationController.handleLogin(loginInfo);
+      if(user?.error){
+        setLoginStatus(true);
+        setShowLoginErrorAlert(true);
+      } else{
+        localStorage.setItem("user", JSON.stringify(user));
+        props.handleNavigate("/");
+      }
+    } catch (error) {
+      setPageError(true);
+    } finally {
+      setPageLoading(false);
+    }
+
   }
+
+  /* useEffect(() => {
+    if(loginStatus){
+      const timer = setTimeout(() => {
+        setLoginStatus(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [loginStatus]); */
 
   const loginButton: ButtonModel = {
     text: "Login",
@@ -49,6 +70,26 @@ function Login ( props: Props) {
     <div id='login' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
       <div className='flex-auto justify-center h-max'>
         <div className='mb-4 flex flex-col items-center justify-center'>
+
+          {pageLoading ? <LoadComponent /> : null}
+
+          {pageError ?
+            <ErrorComponent
+              text='An error occurred while logging in. Please try again later.'
+              activated={pageError}
+              onClose={() => setPageError(false)}
+            />
+          : null}
+
+          {showLoginErrorAlert ?
+            <Alert
+              severity="error"
+              onClose = {() => setShowLoginErrorAlert(false)}
+              className={`mb-4 ${showLoginErrorAlert ? "flex" : "hidden"}`}
+            >
+              Invalid email or password
+            </Alert>
+          : null}
 
           <FormControl
             className='flex items-center justify-between w-5/10 m-1'

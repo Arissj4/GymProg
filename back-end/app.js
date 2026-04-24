@@ -107,7 +107,7 @@ app.post("/api/auth/login", async (req, res) => {
     const user = result.rows[0];
 
     if(!user){
-      return res.status(404).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
 
     const ok = await bcrypt.compare(password, user.password_hash);

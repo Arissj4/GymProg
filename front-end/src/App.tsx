@@ -1,13 +1,14 @@
 import { BrowserRouter, useNavigate, Route, Routes, Router, useLoaderData, useLocation } from 'react-router'
 import './App.css'
 import "./index.scss"
+import AuthenticationController from './controllers/AuthenticationController'
 import MyWorkouts from './pages/MyWorkouts'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Sidebar from './pages/Sidebar'
 import type { User } from './interfaces/User'
 import PageHeader from './pages/PageHeader'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CreateWorkout from './pages/CreateWorkout'
 import SignIn from './pages/SignIn'
 import Profile from './pages/Profile'
@@ -16,38 +17,31 @@ import Profile from './pages/Profile'
 function App() {
 
   let [user, setUser] = useState<User>({id: 0, name: "MyProg", email: "", authenticated: false});
+  let checkedLogin = useRef<Boolean>(false);
   const location = useLocation();
 
   useEffect(() => {
     async function checkUserLogin() {
       try {
-
         const currentPath = location?.pathname;
-        const excludeRoutes = ['/login', '/createuser'];
-        const isExcludedRoute = excludeRoutes.includes(currentPath);
-        if (isExcludedRoute) {
-          return;
+
+        if (checkedLogin.current) return;
+        checkedLogin.current = true;
+
+        const userData = await AuthenticationController.checkUser();
+
+        if(!userData.error) {
+          setUser({id: userData.id, name: userData.name, email: userData.email, authenticated: true});
         }
 
-
-        const res = await fetch("/api/auth/user");
-
-        if (!res.ok) {
-          handleNavigate("/Login");
-          return;
+        if (!user.authenticated && currentPath !== "/login" && currentPath !== "/createuser") {
+          handleNavigate("/login");
+        } else if (user.authenticated && (currentPath === "/login" || currentPath === "/createuser")) {
+          handleNavigate("/");
         }
-
-        const data = await res.json();
-
-        console.log("------User-----");
-        console.log(data);
-        console.log("------User-----");
-
-        setUser(data.user ?? data);
-        handleNavigate("/");
       } catch (error) {
         console.error(error);
-        handleNavigate("/Login");
+        handleNavigate("/login");
       }
     }
 

@@ -33,5 +33,19 @@ export default {
     } catch (error) {
       return { error: "Error occurred while registering" };
     }
+  },
+
+  async checkUser(): Promise<object> {
+    try {
+      const res = await fetch("/api/auth/user");
+
+      if(!res.ok){
+        return { error: "User not authenticated" };
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      return { error: "Error occurred while checking user" };
+    }
   }
 }

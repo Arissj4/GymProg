@@ -2,7 +2,7 @@ import { FormControl, Link, TextField } from '@mui/material'
 import React, { use, useState } from 'react'
 import type { ButtonModel } from '../interfaces/Button'
 import ButtonComponent from '../components/ButtonComponent'
-import * as SignInController from '../controllers/SignInController'
+import AuthenticationController from '../controllers/AuthenticationController'
 import type { Authentication } from '../interfaces/AuthenticationInterface'
 
 type Props = {
@@ -25,7 +25,7 @@ const SignIn = (props: Props) => {
 
   const handleRegisterClick = async (): Promise<void> => {
     try {
-      const status = await SignInController.handleRegister(signinInfo);
+      const status = await AuthenticationController.handleRegister(signinInfo);
       if(status && status?.user){
         alert("User registered successfully");
         props.handleNavigate("/login");
