@@ -43,6 +43,7 @@ function Sidebar (props: Props) {
     style: { width: "220px" },
     clickEvent: () => {
       localStorage.removeItem("user");
+      localStorage.setItem("user", JSON.stringify({id: 0, name: "MyProg", email: "", authenticated: false}));
       props.setUser({id: 0, name: "MyProg", email: "", authenticated: false});
       props.handleNavigate("/login");
     },

@@ -22,34 +22,16 @@ function App() {
 
   useEffect(() => {
     async function checkUserLogin() {
-      try {
-        console.log(user)
-        if(localStorage.getItem("user")) return;
+      if(localStorage.getItem("user") && JSON.parse(localStorage.getItem("user") || "").authenticated) return;
 
-        const currentPath = location?.pathname;
+      const currentPath = location?.pathname;
 
-        if(location.pathname === "/createuser" || location.pathname === "/login"){
-          return;
-        }
+      if(location.pathname === "/createuser" || location.pathname === "/login")return;
 
-        if (checkedLogin.current) return;
-        checkedLogin.current = true;
+      if (checkedLogin.current) return;
+      checkedLogin.current = true;
 
-        const userData = await AuthenticationController.checkUser();
-
-        if(!userData.error) {
-          setUser({id: userData.id, name: userData.name, email: userData.email, authenticated: true});
-        }
-
-        if (!user.authenticated && currentPath !== "/login" && currentPath !== "/createuser") {
-          handleNavigate("/login");
-        } else if (user.authenticated && (currentPath === "/login" || currentPath === "/createuser")) {
-          handleNavigate("/");
-        }
-      } catch (error) {
-        console.error(error);
-        handleNavigate("/login");
-      }
+      handleNavigate("/login");
     }
 
     checkUserLogin();
@@ -73,6 +55,10 @@ function App() {
   function handleNavigate(route: string): void{
     navigate(route);
   }
+
+  useEffect(() => {
+    console.log(user);
+  }, [user])
 
   return (
     <>

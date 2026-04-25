@@ -57,9 +57,16 @@ const SignIn = (props: Props) => {
 
   const registerButton: ButtonModel = {
     text: "Register",
+    type: "orange",
+    style: { width: "220px", marginBottom: "10px" },
+    clickEvent: () => handleRegisterClick(),
+  }
+
+  const backButton: ButtonModel = {
+    text: "Back",
     type: "white",
     style: { width: "220px" },
-    clickEvent: () => handleRegisterClick(),
+    clickEvent: () => props.handleNavigate("/login"),
   }
 
   return (
@@ -126,6 +133,7 @@ const SignIn = (props: Props) => {
 
         <div className='flex flex-col justify-center items-center'>
           <ButtonComponent model={registerButton}/>
+          <ButtonComponent model={backButton}/>
         </div>
       </div>
     </div>
