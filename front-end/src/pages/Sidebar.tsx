@@ -6,7 +6,7 @@ import { faBars, faListOl } from "@fortawesome/free-solid-svg-icons"
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { useNavigate } from 'react-router'
 import type { User } from '../interfaces/User'
-import { Button } from '@mui/material'
+import { Avatar, Button } from '@mui/material'
 import type { ButtonModel } from '../interfaces/Button'
 import ButtonComponent from '../components/ButtonComponent'
 
@@ -32,27 +32,14 @@ function Sidebar (props: Props) {
   }
 
   const sidebarElementsList = [
-    sidebarElementCreator('0', faCircleUser, 'Profile', '/profile'),
-    sidebarElementCreator('1', faHouse, 'Dashboard', '/'),
-    sidebarElementCreator('2', faListOl, 'My Workouts', '/my-workouts'),
+    // sidebarElementCreator('1', faCircleUser, 'Profile', '/profile'),
+    sidebarElementCreator('2', faHouse, 'Dashboard', '/'),
+    sidebarElementCreator('3', faListOl, 'My Workouts', '/my-workouts'),
   ]
-
-  const logoutButton: ButtonModel = {
-    text: "Logout",
-    type: "white",
-    style: { width: "220px" },
-    clickEvent: () => {
-      localStorage.removeItem("user");
-      localStorage.setItem("user", JSON.stringify({id: 0, name: "MyProg", email: "", authenticated: false}));
-      props.setUser({id: 0, name: "MyProg", email: "", authenticated: false});
-      props.handleNavigate("/login");
-    },
-  }
-
 
   return (
     <div id="sidebar" className='ssm:w-12.5 border-r border-section-border-gray py-6'>
-      <ul id="sidebar-list">
+      <ul id="sidebar-list" className='h-full'>
         {/* <div>
           <div>
             {props.user.image ? (
@@ -71,12 +58,23 @@ function Sidebar (props: Props) {
           </div>
         </div> */}
 
-        <div>
+        <div className='flex flex-1'>
+          <div key={0}
+            className='flex w-full justify-center p-4 hover:bg-transparent!'
+          >
+            <Avatar
+              className='hover:cursor-pointer'
+              onClick={() => props.handleNavigate("/profile")}
+            >
+              {props.user.name[0].toUpperCase()}
+            </Avatar>
+          </div>
+
           {sidebarElementsList}
         </div>
 
-        <div>
-          <ButtonComponent model={logoutButton} />
+        <div className='flex max-h-fit'>
+
         </div>
       </ul>
     </div>

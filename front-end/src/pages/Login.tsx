@@ -29,12 +29,12 @@ function Login ( props: Props) {
   async function handleLoginClick(): Promise<void> {
     try{
       setPageLoading(true);
-      const user = await AuthenticationController.handleLogin(loginInfo);
+      const user: any = await AuthenticationController.handleLogin(loginInfo);
       if(user?.error){
         setLoginStatus(true);
         setShowLoginErrorAlert(true);
       } else{
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user.user));
         props.setUser(user.user);
         props.handleNavigate("/");
       }

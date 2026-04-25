@@ -16,13 +16,28 @@ import Profile from './pages/Profile'
 
 function App() {
 
-  let [user, setUser] = useState<User>({id: 0, name: "MyProg", email: "", authenticated: false});
+  let [user, setUser] = useState<User>(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        if (parsed.authenticated) {
+          return parsed;
+        } else if (parsed.user && parsed.user.authenticated) {
+          return parsed.user;
+        }
+      } catch (e) {
+        console.error("Failed to parse user from local storage", e);
+      }
+    }
+    return {id: 0, name: "MyProg", email: "", authenticated: false};
+  });
   let checkedLogin = useRef<Boolean>(false);
   const location = useLocation();
 
   useEffect(() => {
     async function checkUserLogin() {
-      if(localStorage.getItem("user") && JSON.parse(localStorage.getItem("user") || "").authenticated) return;
+      if(user.authenticated) return;
 
       const currentPath = location?.pathname;
 
@@ -72,7 +87,7 @@ function App() {
             <Sidebar user={user} setUser={setUser} handleNavigate={handleNavigate} pageSize={windowSize}/>
             <Routes>
               <Route index element={<Home handleNavigate={handleNavigate} />} />
-              <Route path="/profile" element={<Profile handleNavigate={handleNavigate}/>} />
+              <Route path="/profile" element={<Profile handleNavigate={handleNavigate} setUser={setUser}/>} />
               <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
               <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
             </Routes>
