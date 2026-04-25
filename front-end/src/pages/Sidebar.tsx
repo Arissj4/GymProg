@@ -6,10 +6,14 @@ import { faBars, faListOl } from "@fortawesome/free-solid-svg-icons"
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { useNavigate } from 'react-router'
 import type { User } from '../interfaces/User'
+import { Button } from '@mui/material'
+import type { ButtonModel } from '../interfaces/Button'
+import ButtonComponent from '../components/ButtonComponent'
 
 
 type Props = {
   user: User;
+  setUser: (user: User) => void;
   pageSize: number;
   handleNavigate: (route: string) => void;
 }
@@ -32,6 +36,17 @@ function Sidebar (props: Props) {
     sidebarElementCreator('1', faHouse, 'Dashboard', '/'),
     sidebarElementCreator('2', faListOl, 'My Workouts', '/my-workouts'),
   ]
+
+  const logoutButton: ButtonModel = {
+    text: "Logout",
+    type: "white",
+    style: { width: "220px" },
+    clickEvent: () => {
+      localStorage.removeItem("user");
+      props.setUser({id: 0, name: "MyProg", email: "", authenticated: false});
+      props.handleNavigate("/login");
+    },
+  }
 
 
   return (
@@ -60,7 +75,7 @@ function Sidebar (props: Props) {
         </div>
 
         <div>
-
+          <ButtonComponent model={logoutButton} />
         </div>
       </ul>
     </div>

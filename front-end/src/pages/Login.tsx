@@ -7,10 +7,12 @@ import AuthenticationController from '../controllers/AuthenticationController';
 import { FormControl, TextField, Link, Alert, Backdrop, CircularProgress } from '@mui/material';
 import ErrorComponent from '../components/ErrorComponent';
 import LoadComponent from '../components/LoadComponent';
+import type { User } from '../interfaces/User';
 
 
 type Props = {
   handleNavigate: (route: string) => void;
+  setUser: (user: User) => void;
 }
 
 
@@ -33,6 +35,7 @@ function Login ( props: Props) {
         setShowLoginErrorAlert(true);
       } else{
         localStorage.setItem("user", JSON.stringify(user));
+        props.setUser(user.user);
         props.handleNavigate("/");
       }
     } catch (error) {

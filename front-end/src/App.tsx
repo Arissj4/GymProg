@@ -23,6 +23,9 @@ function App() {
   useEffect(() => {
     async function checkUserLogin() {
       try {
+        console.log(user)
+        if(localStorage.getItem("user")) return;
+
         const currentPath = location?.pathname;
 
         if(location.pathname === "/createuser" || location.pathname === "/login"){
@@ -80,7 +83,7 @@ function App() {
 
         {user.authenticated ?
           <div className='flex flex-row'>
-            <Sidebar user={user} handleNavigate={handleNavigate} pageSize={windowSize}/>
+            <Sidebar user={user} setUser={setUser} handleNavigate={handleNavigate} pageSize={windowSize}/>
             <Routes>
               <Route index element={<Home handleNavigate={handleNavigate} />} />
               <Route path="/profile" element={<Profile handleNavigate={handleNavigate}/>} />
@@ -90,7 +93,7 @@ function App() {
           </div> :
           <div className='flex flex-row'>
             <Routes>
-              <Route path="/login" element={<Login handleNavigate={handleNavigate} />} />
+              <Route path="/login" element={<Login handleNavigate={handleNavigate} setUser={setUser} />} />
               <Route path='/createuser' element={<SignIn handleNavigate={handleNavigate}/>} />
             </Routes>
           </div>
