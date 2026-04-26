@@ -80,17 +80,17 @@ const SignIn = (props: Props) => {
           : null}
 
           {showSuccessMessage ?
-          <Alert>
-            User created successfully! Redirecting to login...
-          </Alert>
+            <Alert>
+              User created successfully! Redirecting to login...
+            </Alert>
           : null}
 
           {showErrorMessage ?
-          <Alert
-            severity='error'
-          >
-            {errorMessageText}
-          </Alert>
+            <Alert
+              severity='error'
+            >
+              {errorMessageText}
+            </Alert>
           : null}
 
           {pageError ?

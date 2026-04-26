@@ -36,11 +36,11 @@ export default {
   },
 
   async logout(): Promise<object> {
-    try{
-
-    } catch (error) {
-      return { error: "Error occurred while logging out" };
-    }
+    return  api.post("/auth/logout")
+      .then((res: { data: object }) => res.data)
+      .catch((error: any) => {
+        throw error;
+      });
   },
 
   async checkUser(): Promise<object> {

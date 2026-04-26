@@ -6,6 +6,8 @@ import type { ButtonModel } from '../interfaces/Button';
 import ButtonComponent from '../components/ButtonComponent';
 import ErrorComponent from '../components/ErrorComponent';
 import LoadComponent from '../components/LoadComponent';
+import AuthenticationController from '../controllers/AuthenticationController';
+import { Alert } from '@mui/material';
 
 type Props = {
   setUser: (user: User) => void;
@@ -22,23 +24,28 @@ const Profile = (props: Props) => {
     text: "Logout",
     type: "white",
     style: { width: "120px" },
-    clickEvent: () => {
+    clickEvent: async () => {
       try{
-
+        setPageLoading(true);
+        await AuthenticationController.handleLogout();
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify({id: 0, name: "MyProg", email: "", authenticated: false}));
+        props.setUser({id: 0, name: "MyProg", email: "", authenticated: false});
+        props.handleNavigate("/login");
       } catch (error) {
         setPageError(true);
       } finally {
         setPageLoading(false);
       }
-      localStorage.removeItem("user");
-      localStorage.setItem("user", JSON.stringify({id: 0, name: "MyProg", email: "", authenticated: false}));
-      props.setUser({id: 0, name: "MyProg", email: "", authenticated: false});
-      props.handleNavigate("/login");
     },
   }
 
   return (
     <div id='profile' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
+
+      {pageLoading ?
+        <LoadComponent />
+      : null}
 
       {pageError ?
         <ErrorComponent
@@ -48,9 +55,11 @@ const Profile = (props: Props) => {
         />
       : null}
 
-      {pageLoading ?
-        <LoadComponent />
-      : null}
+      {/* {showSuccessMessage ?
+        <Alert>
+          Logged out successfully! Redirecting to login...
+        </Alert>
+      : null} */}
 
       <div className='flex flex-col'>
 

@@ -29,9 +29,6 @@ if (process.env.NODE_ENV === "production"){
   app.set("trust proxy", 1);
 }
 
-console.log("Session_secret:", process.env.SESSION_SECRET);
-console.log("Session_secret exists:", Boolean(process.env.SESSION_SECRET));
-
 app.use(
   session({
     store: new PgStore({

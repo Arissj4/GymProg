@@ -23,6 +23,15 @@ export default {
     }
   },
 
+  async handleLogout(): Promise<object> {
+    try {
+       const logout = await AuthenticationModel.logout();
+       return logout;
+    } catch (error) {
+      return { error: "An error occurred while logging out"};
+    }
+  },
+
   async checkUser(): Promise<object> {
     try {
       const user = await AuthenticationModel.checkUser();
