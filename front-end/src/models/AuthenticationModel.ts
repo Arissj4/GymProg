@@ -1,42 +1,55 @@
 import type { Authentication } from "../interfaces/AuthenticationInterface";
+// @ts-ignore
+import api from "./api";
 
 export default {
-  async login(auth: Authentication): Promise<object> {
-      // Implement login logic here
-      try{
-        const loginRes = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(auth),
-        });
-        const data = await loginRes.json();
-        return data;
-      } catch (error) {
-        return { error: "Error occurred while logging in" };
-      }
+  async register(user: Authentication): Promise<object> {
+    // const registerRes = await fetch(`/api/auth/register`, {
+    //   method: "POST",
+    //   headers: {
+    //     'content-type': 'application/json',
+    //   },
+    //   body: JSON.stringify(user),
+    // })
+    // const data = await registerRes.json();
+    return api.post("/auth/register", user)
+      .then((res: { data: object }) => res.data)
+      .catch((error: any) => {
+        return { error: error.response.data.error };
+      });
   },
 
-  async register(user: Authentication): Promise<object> {
-    try{
-      const registerRes = await fetch(`/api/auth/register`, {
-        method: "POST",
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      })
+  async login(auth: Authentication): Promise<object> {
+    // const loginRes = await fetch("/api/auth/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(auth),
+    // });
+    // const data = await loginRes.json();
+    return api.post("/auth/login", auth)
+      .then((res: { data: object }) => res.data)
+      .catch((error: any) => {
+        throw error;
+      });
+  },
 
-      const data = await registerRes.json();
-      return data;
+  async logout(): Promise<object> {
+    try{
+
     } catch (error) {
-      return { error: "Error occurred while registering" };
+      return { error: "Error occurred while logging out" };
     }
   },
 
   async checkUser(): Promise<object> {
-    try {
+    return api.get("/auth/user")
+      .then((res: { data: object}) => res.data)
+      .catch((error: any) => {
+        throw error;
+      });
+    /* try {
       const res = await fetch("/api/auth/user");
 
       if(!res.ok){
@@ -46,6 +59,6 @@ export default {
       return data;
     } catch (error) {
       return { error: "Error occurred while checking user" };
-    }
-  }
+    } */
+  },
 }

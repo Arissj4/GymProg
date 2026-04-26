@@ -5,6 +5,7 @@ import ButtonComponent from '../components/ButtonComponent'
 import AuthenticationController from '../controllers/AuthenticationController'
 import type { Authentication } from '../interfaces/AuthenticationInterface'
 import ErrorComponent from '../components/ErrorComponent'
+import LoadComponent from '../components/LoadComponent'
 
 type Props = {
   handleNavigate: (route: string) => void;
@@ -73,6 +74,10 @@ const SignIn = (props: Props) => {
     <div id='create-user' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
       <div className='flex-auto justify-center h-max'>
         <div className='mb-4 flex flex-col items-center justify-center'>
+
+          {pageLoading ?
+            <LoadComponent />
+          : null}
 
           {showSuccessMessage ?
           <Alert>

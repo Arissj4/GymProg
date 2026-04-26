@@ -18,7 +18,10 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost", "http://localhost:5173"], // Add your NGINX and Vite local dev URLs
+  credentials: true,
+}));
 app.use(helmet());
 app.use(express.json());
 
