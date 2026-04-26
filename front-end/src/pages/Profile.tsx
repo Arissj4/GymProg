@@ -7,9 +7,10 @@ import ButtonComponent from '../components/ButtonComponent';
 import ErrorComponent from '../components/ErrorComponent';
 import LoadComponent from '../components/LoadComponent';
 import AuthenticationController from '../controllers/AuthenticationController';
-import { Alert } from '@mui/material';
+import { Alert, Divider } from '@mui/material';
 
 type Props = {
+  user: User;
   setUser: (user: User) => void;
   handleNavigate: (route: string) => void;
 }
@@ -41,7 +42,7 @@ const Profile = (props: Props) => {
   }
 
   return (
-    <div id='profile' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
+    <div id='profile' className='flex flex-auto h-full p-6 flex-col justify-center w-[70%]'>
 
       {pageLoading ?
         <LoadComponent />
@@ -61,11 +62,38 @@ const Profile = (props: Props) => {
         </Alert>
       : null} */}
 
-      <div className='flex flex-col'>
+      <div className='flex flex-col flex-1'>
+        <div>
+          <header>
+            <h1 className='text-2xl font-bold'>
+              Profile
+            </h1>
+            <Divider variant='fullWidth' />
+          </header>
 
+          <section className='mt-4 text-2'>
+            <div className='grid grid-cols-[60px_auto] gap-2 mb-2 pl-2'>
+              <div className='font-bold'>
+                Name:
+              </div>
+              <div>
+                {props.user.name}
+              </div>
+            </div>
+
+            <div className='grid grid-cols-[60px_auto] gap-2 mb-2 pl-2'>
+              <div className='font-bold'>
+                Email:
+              </div>
+              <div>
+                {props.user.email}
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
 
-      <div className='flex flex-col items-center mt-6'>
+      <div className='flex flex-col h-fit items-center mt-6'>
         <ButtonComponent model={logoutButton} />
       </div>
     </div>

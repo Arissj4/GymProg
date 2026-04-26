@@ -87,7 +87,7 @@ function App() {
             <Sidebar user={user} setUser={setUser} handleNavigate={handleNavigate} pageSize={windowSize}/>
             <Routes>
               <Route index element={<Home handleNavigate={handleNavigate} />} />
-              <Route path="/profile" element={<Profile handleNavigate={handleNavigate} setUser={setUser}/>} />
+              <Route path="/profile" element={<Profile handleNavigate={handleNavigate} setUser={setUser} user={user}/>} />
               <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
               <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
             </Routes>
