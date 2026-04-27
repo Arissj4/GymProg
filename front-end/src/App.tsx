@@ -71,10 +71,6 @@ function App() {
     navigate(route);
   }
 
-  useEffect(() => {
-    console.log(user);
-  }, [user])
-
   return (
     <>
       <div id="wrapper" className='rounded-[30px]'>
