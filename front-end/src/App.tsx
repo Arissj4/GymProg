@@ -85,7 +85,7 @@ function App() {
               <Route index element={<Home handleNavigate={handleNavigate} />} />
               <Route path="/profile" element={<Profile handleNavigate={handleNavigate} setUser={setUser} user={user}/>} />
               <Route path="/my-workouts" element={<MyWorkouts programs={['Program 1', 'Program 2', 'Program 3']} pageSize={windowSize} handleNavigate={handleNavigate}/>}/>
-              <Route path='/my-workouts/create-workout' element={<CreateWorkout />}/>
+              <Route path='/my-workouts/create-workout' element={<CreateWorkout user={user}/>}/>
             </Routes>
           </div> :
           <div className='flex flex-row'>

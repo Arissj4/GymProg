@@ -1,3 +1,4 @@
+import type { Workout } from "../interfaces/Workout";
 import WorkoutModel from "../models/WorkoutsModel";
 
 export default{
@@ -8,5 +9,14 @@ export default{
     } catch (error) {
       return ({error: "An error occurred while getting workouts"});
     }
-  }
+  },
+
+  async handleCreateWorkout(payload: Workout): Promise<object> {
+    try {
+      const workout = await WorkoutModel.createWorkout(payload);
+      return workout;
+    } catch (error) {
+      return ({error: "An error occurred while creating workout"});
+    }
+  },
 }

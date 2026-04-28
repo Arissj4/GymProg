@@ -1,16 +1,14 @@
 export interface Exercise {
-    id: string;
+    id?: string;
     name: string;
+    day: number;
     sets: number;
     reps: number;
-    maxWeight: number;
-    weight: number;
-    minWeight: number;
     rest: number;
-    details: string;
+    note: string;
 }
 
-export default class ExerciseItem implements Exercise {
+/* export default class ExerciseItem implements Exercise {
     private _id: string;
     private _name: string;
     private _sets: number;
@@ -42,7 +40,7 @@ export default class ExerciseItem implements Exercise {
         this._rest = rest;
         this._details = details;
     }
-    
+
     get id(): string {
         return this._id;
     }
@@ -50,7 +48,7 @@ export default class ExerciseItem implements Exercise {
     set id(id: string) {
         this._id = id;
     }
-    
+
     get name(): string {
         return this._name;
     }
@@ -58,31 +56,31 @@ export default class ExerciseItem implements Exercise {
     set name(name: string) {
         this._name = name;
     }
-    
+
     get sets(): number {
         return this._sets;
     }
-    
+
     set sets(sets: number) {
         this._sets = sets;
     }
-    
+
     get reps(): number {
         return this._reps;
     }
-    
+
     set reps(reps: number) {
         this._reps = reps;
     }
-    
+
     get maxWeight(): number {
         return this._maxWeight;
     }
-    
+
     set maxWeight(maxWeight: number) {
         this._maxWeight = maxWeight;
     }
-    
+
     get weight(): number {
         return this._weight;
     }
@@ -90,28 +88,28 @@ export default class ExerciseItem implements Exercise {
     set weight(weight: number) {
         this._weight = weight;
     }
-    
+
     get minWeight(): number {
         return this._minWeight;
     }
-    
+
     set minWeight(minWeight: number) {
         this._minWeight = minWeight;
     }
-    
+
     get rest(): number {
         return this._rest;
     }
-    
+
     set rest(rest: number) {
         this._rest = rest;
     }
-    
+
     get details(): string {
         return this._details;
     }
-    
+
     set details(details: string) {
         this._details = details;
     }
-}
+} */

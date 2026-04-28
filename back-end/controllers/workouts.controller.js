@@ -12,8 +12,8 @@ exports.getAllWorkouts = async (req, res) => {
 
 exports.createWorkout = async (req, res) => {
   try{
-    const { title, load, reps } = req.body;
-    const newWorkout = await workoutsModel.createWorkout(title, load, reps);
+    const { title, exercises } = req.body;
+    const newWorkout = await workoutsModel.createWorkout(title, exercises, req.session.user.id);
     res.status(201).json(newWorkout);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
