@@ -1,6 +1,6 @@
 // @ts-ignore
-import type { Workout } from '../interfaces/Workout';
 import api from './api'
+import type { Workout } from '../interfaces/Workout';
 
 
 export default{
