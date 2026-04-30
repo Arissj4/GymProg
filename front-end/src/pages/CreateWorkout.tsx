@@ -24,6 +24,23 @@ function CreateWorkout(props: Props) {
     clickEvent: () => { if(days < 7)setDays(prev => prev + 1); }
   }
 
+  const [activeButton, setActiveButton] = useState<number>(0);
+
+  function selectWorkoutDay (btnNumber: number): void {
+    setActiveButton(btnNumber);
+    let btn = document.getElementById(btnNumber.toString());
+    if(btn){
+      btn.style.backgroundColor = "lightskyblue";
+      btn.style.color = "white";
+      for (let i = 0; i < days; i++) {
+        if (i !== btnNumber) {
+          document.getElementById(i.toString())?.style.removeProperty("background-color");
+          document.getElementById(i.toString())?.style.removeProperty("color");
+        }
+      }
+    }
+  }
+
   async function newWorkout(){
     try {
       return;
@@ -70,15 +87,25 @@ function CreateWorkout(props: Props) {
             <ButtonComponent model={addDayButton} />
           </div>
 
-          <div className='flex justify-center'>
-            <ButtonGroup>
-              {Array.from({ length: days}).map((_, index) => <Button key={index}>Day {index + 1}</Button>)}
+          <div className='flex justify-center overflow-scroll'>
+            <ButtonGroup className='w-full'>
+              {Array.from({ length: days}).map((_, index) => {
+                return <Button
+                          key={index}
+                          id={index.toString()}
+                          onClick={() => {selectWorkoutDay(index)}}
+                        >
+                          Day {index + 1}
+                        </Button>
+              })}
             </ButtonGroup>
           </div>
         </div>
+
+
       </form>
 
-      <Button onClick={() => newWorkout()}>
+      <Button onClick={() => newWorkout()} className='bg-orange-500 text-white mt-4'>
         Create Workout
       </Button>
     </div>
