@@ -55,7 +55,7 @@ function Login ( props: Props) {
   }, [loginStatus]); */
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/health`).then((res) => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/health`, {credentials: "include"}).then((res) => {
       if(res.status === 200){
         console.log("API is healthy");
       }

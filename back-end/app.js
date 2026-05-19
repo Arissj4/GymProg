@@ -19,7 +19,11 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use(cors({
-  origin: ["http://localhost", "http://localhost:5173", "https://gym-prog.vercel.app"], // Add your NGINX and Vite local dev URLs
+  origin: [
+    "http://localhost",
+    "http://localhost:5173",
+    "https://gym-prog.vercel.app"
+  ], // Add your NGINX and Vite local dev URLs
   credentials: true,
 }));
 
