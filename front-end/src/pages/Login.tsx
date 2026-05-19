@@ -1,5 +1,5 @@
 import ButtonComponent from '../components/ButtonComponent';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ButtonModel } from '../interfaces/Button';
 import type { Authentication } from '../interfaces/AuthenticationInterface';
 import AuthenticationController from '../controllers/AuthenticationController';
@@ -53,6 +53,14 @@ function Login ( props: Props) {
       return () => clearTimeout(timer);
     }
   }, [loginStatus]); */
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/health`).then((res) => {
+      if(res.status === 200){
+        console.log("API is healthy");
+      }
+    })
+  }, []);
 
   const loginButton: ButtonModel = {
     text: "Login",
