@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
 import ButtonComponent from '../components/ButtonComponent';
 import { useState } from 'react';
 import type { ButtonModel } from '../interfaces/Button';
 import type { Authentication } from '../interfaces/AuthenticationInterface';
 import AuthenticationController from '../controllers/AuthenticationController';
-import { FormControl, TextField, Link, Alert, Backdrop, CircularProgress } from '@mui/material';
+import { FormControl, TextField, Link, Alert } from '@mui/material';
 import ErrorComponent from '../components/ErrorComponent';
 import LoadComponent from '../components/LoadComponent';
 import type { User } from '../interfaces/User';
@@ -19,11 +18,11 @@ type Props = {
 function Login ( props: Props) {
 
   // Variables Section
-  const [pageLoading, setPageLoading] = useState<Boolean>(false);
-  const [pageError, setPageError] = useState<Boolean>(false);
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
+  const [pageError, setPageError] = useState<boolean>(false);
 
-  const [loginStatus, setLoginStatus] = useState<Boolean>(false);
-  const [showLoginErrorAlert, setShowLoginErrorAlert] = useState<Boolean>(false);
+  const [loginStatus, setLoginStatus] = useState<boolean>(false);
+  const [showLoginErrorAlert, setShowLoginErrorAlert] = useState<boolean>(false);
   const [loginInfo, setLoginInfo] = useState<Authentication>({email: "", password: ""});
 
   async function handleLoginClick(): Promise<void> {

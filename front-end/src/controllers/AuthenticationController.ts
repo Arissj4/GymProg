@@ -13,7 +13,7 @@ export default {
     }
   },
 
-  async handleRegister(user: Authentication): Promise<object> {
+  async handleRegister(user: Authentication): Promise<any | object> {
     try {
       const result = await AuthenticationModel.register(user);
       return result;

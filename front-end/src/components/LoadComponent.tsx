@@ -1,9 +1,7 @@
-import React from 'react'
 import { Backdrop, CircularProgress } from '@mui/material';
 
-type Props = {}
 
-const LoadComponent = (props: Props) => {
+const LoadComponent = () => {
   return (
     <Backdrop
       open={true}

@@ -1,9 +1,8 @@
-import { Alert, FormControl, Link, TextField } from '@mui/material'
-import React, { use, useState } from 'react'
+import { Alert, FormControl, TextField } from '@mui/material'
+import { useState } from 'react'
 import type { ButtonModel } from '../interfaces/Button'
 import ButtonComponent from '../components/ButtonComponent'
 import AuthenticationController from '../controllers/AuthenticationController'
-import type { Authentication } from '../interfaces/AuthenticationInterface'
 import ErrorComponent from '../components/ErrorComponent'
 import LoadComponent from '../components/LoadComponent'
 
@@ -19,10 +18,10 @@ type userInfo = {
 
 const SignIn = (props: Props) => {
 
-  const [pageLoading, setPageLoading] = useState<Boolean>(false);
-  const [pageError, setPageError] = useState<Boolean>(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
-  const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
+  const [pageError, setPageError] = useState<boolean>(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessageText, setErrorMessageText] = useState<string>("");
 
 
