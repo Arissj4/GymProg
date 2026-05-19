@@ -14,10 +14,6 @@ const PgStore = connectPgSimple(session);
 const usersRoutes = require('./routes/users.routes');
 const workoutsRoutes = require('./routes/workouts.routes');
 
-app.get("/api/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
-
 app.use(cors({
   origin: [
     "http://localhost",
@@ -60,6 +56,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 app.post("/api/auth/register", async (req, res) => {
   try{
