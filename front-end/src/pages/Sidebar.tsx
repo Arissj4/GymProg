@@ -1,14 +1,11 @@
-import React, { type JSX } from 'react'
+import { type JSX } from 'react'
 import '../style/Sidebar.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faCircleUser } from '@fortawesome/free-regular-svg-icons'
-import { faBars, faListOl } from "@fortawesome/free-solid-svg-icons"
+import { faHouse } from '@fortawesome/free-regular-svg-icons'
+import { faListOl } from "@fortawesome/free-solid-svg-icons"
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { useNavigate } from 'react-router'
 import type { User } from '../interfaces/User'
-import { Avatar, Button } from '@mui/material'
-import type { ButtonModel } from '../interfaces/Button'
-import ButtonComponent from '../components/ButtonComponent'
+import { Avatar } from '@mui/material'
 
 
 type Props = {

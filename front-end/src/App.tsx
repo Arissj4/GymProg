@@ -1,7 +1,6 @@
-import { BrowserRouter, useNavigate, Route, Routes, Router, useLoaderData, useLocation } from 'react-router'
+import { useNavigate, Route, Routes, useLocation } from 'react-router'
 import './App.css'
 import "./index.scss"
-import AuthenticationController from './controllers/AuthenticationController'
 import MyWorkouts from './pages/MyWorkouts'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -38,8 +37,6 @@ function App() {
   useEffect(() => {
     async function checkUserLogin() {
       if(user.authenticated) return;
-
-      const currentPath = location?.pathname;
 
       if(location.pathname === "/createuser" || location.pathname === "/login")return;
 

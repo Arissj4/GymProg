@@ -1,28 +1,26 @@
 import { Button, ButtonGroup } from '@mui/material'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import WorkoutsController from '../controllers/WorkoutsController';
-import type { Workout } from '../interfaces/Workout';
+import { useState } from 'react'
+// import WorkoutsController from '../controllers/WorkoutsController';
+// import type { Workout } from '../interfaces/Workout';
 import type { User } from '../interfaces/User';
 import ButtonComponent from '../components/ButtonComponent';
 import type { ButtonModel } from '../interfaces/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import type { Exercise } from '../interfaces/Exercise';
 
 type Props = {
-  user: User;
+  user: User,
 }
 
 function CreateWorkout(props: Props) {
 
-  const [pageLoading, setPageLoading] = useState<Boolean>(false);
-  const [pageError, setPageError] = useState<Boolean>(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
-  const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
-  const [errorMessageText, setErrorMessageText] = useState<string>("");
+  // const [pageLoading, setPageLoading] = useState<Boolean>(false);
+  // const [pageError, setPageError] = useState<Boolean>(false);
+  // const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
+  // const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
+  // const [errorMessageText, setErrorMessageText] = useState<string>("");
   const [workoutTitle, setWorkoutTitle] = useState<string>("");
   const [days, setDays] = useState<number>(0);
-  const [exercisesList, setExercisesList] = useState<Exercise[]>([]);
+  // const [exercisesList, setExercisesList] = useState<Exercise[]>([]);
 
 
   const addDayButton: ButtonModel = {
@@ -35,10 +33,10 @@ function CreateWorkout(props: Props) {
     }
   }
 
-  const [activeButton, setActiveButton] = useState<number>(0);
+  // const [activeButton, setActiveButton] = useState<number>(0);
 
   function selectWorkoutDay (btnNumber: number): void {
-    setActiveButton(btnNumber);
+    // setActiveButton(btnNumber);
     let btn = document.getElementById(btnNumber.toString());
     if(btn){
       btn.style.backgroundColor = "lightskyblue";
@@ -54,8 +52,9 @@ function CreateWorkout(props: Props) {
 
   async function newWorkout(){
     try {
+      console.log(props)
       return;
-      let payload: Workout ={
+      /* let payload: Workout ={
         title: "test",
         exercises: [
           {
@@ -77,7 +76,7 @@ function CreateWorkout(props: Props) {
 
         ]
       }
-      const res = await WorkoutsController.handleCreateWorkout(payload);
+      const res = await WorkoutsController.handleCreateWorkout(payload); */
 
     } catch (error) {
       console.log(error);

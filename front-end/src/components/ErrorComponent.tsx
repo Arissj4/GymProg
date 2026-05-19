@@ -1,9 +1,8 @@
-import React from 'react'
 import { Alert, Backdrop } from '@mui/material'
 
 type Props = {
   text: string,
-  activated: Boolean,
+  activated: boolean,
   onClose: () => void,
 }
 
