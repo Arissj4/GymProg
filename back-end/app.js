@@ -14,14 +14,20 @@ const PgStore = connectPgSimple(session);
 const usersRoutes = require('./routes/users.routes');
 const workoutsRoutes = require('./routes/workouts.routes');
 
-app.use(cors({
+
+const corsOptions = {
   origin: [
     "http://localhost",
     "http://localhost:5173",
-    "https://gym-prog.vercel.app"
-  ], // Add your NGINX and Vite local dev URLs
+    "https://gym-prog.vercel.app",
+  ],
   credentials: true,
-}));
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use(helmet());
 app.use(express.json());
