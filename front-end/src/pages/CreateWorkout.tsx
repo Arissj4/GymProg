@@ -7,6 +7,7 @@ import ButtonComponent from '../components/ButtonComponent';
 import type { ButtonModel } from '../interfaces/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import type { Exercise } from '../interfaces/Exercise';
 
 type Props = {
   user: User;
@@ -14,14 +15,24 @@ type Props = {
 
 function CreateWorkout(props: Props) {
 
+  const [pageLoading, setPageLoading] = useState<Boolean>(false);
+  const [pageError, setPageError] = useState<Boolean>(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
+  const [errorMessageText, setErrorMessageText] = useState<string>("");
+  const [workoutTitle, setWorkoutTitle] = useState<string>("");
   const [days, setDays] = useState<number>(0);
+  const [exercisesList, setExercisesList] = useState<Exercise[]>([]);
 
 
   const addDayButton: ButtonModel = {
     text: "Add Day",
     type: "orange",
     icon: faPlus,
-    clickEvent: () => { if(days < 7)setDays(prev => prev + 1); }
+    clickEvent: () => {
+      if(days < 7)setDays(prev => prev + 1);
+      selectWorkoutDay(0);
+    }
   }
 
   const [activeButton, setActiveButton] = useState<number>(0);
@@ -83,6 +94,16 @@ function CreateWorkout(props: Props) {
 
       <form className=''>
         <div>
+          <div>
+            <input
+              type="text"
+              placeholder='Workout Title'
+              className='w-full p-2 border border-gray-300 rounded-md mb-4'
+              value={workoutTitle}
+              onChange={(e) => setWorkoutTitle(e.target.value)}
+            />
+          </div>
+
           <div className='flex min-w-fit mb-4'>
             <ButtonComponent model={addDayButton} />
           </div>
