@@ -70,7 +70,6 @@ function Login ( props: Props) {
 
   return (
     <div id='login' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
-      Hi
       <div className='flex-auto justify-center h-max'>
         <div className='mb-4 flex flex-col items-center justify-center'>
 
