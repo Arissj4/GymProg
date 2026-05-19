@@ -1,8 +1,6 @@
-import React from 'react'
 import type { ButtonModel } from "../interfaces/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 
 type Props = {
   model: ButtonModel,

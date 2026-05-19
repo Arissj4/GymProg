@@ -2,7 +2,7 @@ import type { Workout } from "../interfaces/Workout";
 import WorkoutModel from "../models/WorkoutsModel";
 
 export default{
-  async getWorkouts(): Promise<object> {
+  async getWorkouts(): Promise<object>{
     try {
       const workouts = await WorkoutModel.getWorkouts();
       return workouts;

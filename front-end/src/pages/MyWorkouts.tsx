@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type ReactElement } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import LoadComponent from '../components/LoadComponent';
@@ -13,11 +13,11 @@ type pageProps = {
 
 function MyWorkouts (props: pageProps): ReactElement {
 
-  const [pageLoading, setPageLoading] = useState<Boolean>(false);
-  const [pageError, setPageError] = useState<Boolean>(false);
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
+  const [pageError, setPageError] = useState<boolean>(false);
 
-  const [workouts, setWorkouts] = useState<object>([]);
-  let workoutsLoaded = useRef<Boolean>(false);
+  const [workouts, setWorkouts] = useState<[]>([]);
+  let workoutsLoaded = useRef<boolean>(false);
 
 
   useEffect(() => {
@@ -26,8 +26,12 @@ function MyWorkouts (props: pageProps): ReactElement {
       try{
         setPageLoading(true);
         workoutsLoaded.current = true;
-        const res = await WorkoutsController.getWorkouts();
-        setWorkouts(res);
+        const res: object | [] | {error: string} = await WorkoutsController.getWorkouts();
+        if('error' in res){
+          setPageError(true);
+        } else {
+          setWorkouts(res as []);
+        }
       } catch (error) {
         setPageError(true);
       } finally {
@@ -58,6 +62,12 @@ function MyWorkouts (props: pageProps): ReactElement {
           My Workout Plans
         </span>
       </div>
+
+      {workouts.length === 0 && !pageLoading ?
+        <div className='text-center mt-4 text-gray-600'>
+          You don't have any workout plans yet. Create one to get started!
+        </div>
+      : null}
 
       <div className='flex flex-col items-center mt-6'>
         <button

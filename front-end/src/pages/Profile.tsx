@@ -1,13 +1,11 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { use, useState } from 'react'
+import { useState } from 'react'
 import type { User } from '../interfaces/User';
 import type { ButtonModel } from '../interfaces/Button';
 import ButtonComponent from '../components/ButtonComponent';
 import ErrorComponent from '../components/ErrorComponent';
 import LoadComponent from '../components/LoadComponent';
 import AuthenticationController from '../controllers/AuthenticationController';
-import { Alert, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
 
 type Props = {
   user: User;
@@ -17,9 +15,9 @@ type Props = {
 
 const Profile = (props: Props) => {
 
-  const [pageLoading, setPageLoading] = useState<Boolean>(false);
-  const [pageError, setPageError] = useState<Boolean>(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState<Boolean>(false);
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
+  const [pageError, setPageError] = useState<boolean>(false);
+  // const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   const logoutButton: ButtonModel = {
     text: "Logout",
