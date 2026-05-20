@@ -70,7 +70,7 @@ function App() {
 
   return (
     <>
-      <div id="wrapper" className='rounded-[30px]'>
+      <div id="wrapper" className='lg:rounded-[30px]'>
         <div>
           <PageHeader user={user} handleNavigate={handleNavigate}/>
         </div>
