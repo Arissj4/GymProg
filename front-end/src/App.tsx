@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import CreateWorkout from './pages/CreateWorkout'
 import SignIn from './pages/SignIn'
 import Profile from './pages/Profile'
+import { Analytics } from '@vercel/analytics/react'
 
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
           </div>
         }
       </div>
+      <Analytics />
     </>
   )
 }
