@@ -1,7 +1,7 @@
 const pool = require('../db/pool');
 
-exports.getAllWorkouts = async () => {
-  const result = await pool.query("SELECT * FROM workouts");
+exports.getAllWorkouts = async (userId) => {
+  const result = await pool.query("SELECT * FROM workouts WHERE user_id = $1", [userId]);
   return result.rows;
 }
 
