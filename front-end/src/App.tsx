@@ -16,7 +16,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 function App() {
 
-  let [user, setUser] = useState<User>(() => {
+  const [user, setUser] = useState<User>(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       try {
@@ -32,7 +32,7 @@ function App() {
     }
     return {id: 0, name: "MyProg", email: "", authenticated: false};
   });
-  let checkedLogin = useRef<Boolean>(false);
+  const checkedLogin = useRef<boolean>(false);
   const location = useLocation();
 
   useEffect(() => {
