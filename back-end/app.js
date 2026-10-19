@@ -20,6 +20,7 @@ const corsOptions = {
     "http://localhost",
     "http://localhost:5173",
     "https://gym-prog.vercel.app",
+    "https://gym-prog-git-development-arissj4.vercel.app/",
     "https://gym-prog-q77ftcpjo-arissj4.vercel.app/",
   ],
   credentials: true,
