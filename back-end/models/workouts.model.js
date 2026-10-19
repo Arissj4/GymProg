@@ -6,18 +6,34 @@ exports.getAllWorkouts = async (userId) => {
 }
 
 exports.createWorkout = async (title, exercises, userId) => {
-  const result = await pool.query("INSERT INTO workouts (title, user_id) VALUES ($1, $2) RETURNING id, title", [title, userId]);
+  const client = await pool.connect();
 
-  const workoutId = result.rows[0].id;
+  try {
+    await client.query('BEGIN');
 
-  const exercisePromises = exercises.map(exercise =>
+    const result = await client.query("INSERT INTO workouts (title, user_id) VALUES ($1, $2) RETURNING id, title", [title, userId]);
+
+    const workoutId = result.rows[0].id;
+
+    const exercisePromises = exercises.map(exercise =>
+      client.query("INSERT INTO exercises (name, day, sets, reps, rest, note, workout_id) VALUES ($1, $2, $3, $4, $5, $6, $7)", [exercise.name, exercise.day, exercise.sets, exercise.reps, exercise.rest, exercise.note, workoutId])
+    );
+    await Promise.all(exercisePromises);
+    await client.query('COMMIT');
+
+    const createdWorkout = result.rows[0];
+    const createdExercises = await pool.query("SELECT id, name, day, sets, reps, rest, note FROM exercises WHERE workout_id = $1", [workoutId]);
+
+    return { ...createdWorkout, exercises: createdExercises.rows};
+  } catch (e) {
+    await client.query('ROLLBACK');
+    console.error(e);
+    throw e;
+  } finally {
+    await client.release();
+  }
+  /*const exercisePromises = exercises.map(exercise =>
     pool.query("INSERT INTO exercises (name, day, sets, reps, rest, note, workout_id) VALUES ($1, $2, $3, $4, $5, $6, $7)", [exercise.name, exercise.day, exercise.sets, exercise.reps, exercise.rest, exercise.note, workoutId])
   );
-  await Promise.all(exercisePromises);
-
-
-  const createdWorkout = result.rows[0];
-  const createdExercises = await pool.query("SELECT id, name, day, sets, reps, rest, note FROM exercises WHERE workout_id = $1", [workoutId]);
-
-  return { ...createdWorkout, exercises: createdExercises.rows};
+  await Promise.all(exercisePromises);*/
 }
