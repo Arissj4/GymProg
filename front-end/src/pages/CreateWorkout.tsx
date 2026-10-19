@@ -33,21 +33,21 @@ function CreateWorkout(props: Props) {
     }
   }
 
-  // const [activeButton, setActiveButton] = useState<number>(0);
+  const [activeDay, setActiveDay] = useState<number>(0);
 
   function selectWorkoutDay (btnNumber: number): void {
-    // setActiveButton(btnNumber);
-    let btn = document.getElementById(btnNumber.toString());
-    if(btn){
-      btn.style.backgroundColor = "lightskyblue";
-      btn.style.color = "white";
-      for (let i = 0; i < days; i++) {
-        if (i !== btnNumber) {
-          document.getElementById(i.toString())?.style.removeProperty("background-color");
-          document.getElementById(i.toString())?.style.removeProperty("color");
-        }
-      }
-    }
+    setActiveDay(btnNumber);
+    // let btn = document.getElementById(btnNumber.toString());
+    // if(btn){
+    //   btn.style.backgroundColor = "lightskyblue";
+    //   btn.style.color = "white";
+    //   for (let i = 0; i < days; i++) {
+    //     if (i !== btnNumber) {
+    //       document.getElementById(i.toString())?.style.removeProperty("background-color");
+    //       document.getElementById(i.toString())?.style.removeProperty("color");
+    //     }
+    //   }
+    // }
   }
 
   async function newWorkout(){
@@ -110,10 +110,14 @@ function CreateWorkout(props: Props) {
           <div className='flex justify-center overflow-scroll'>
             <ButtonGroup className='w-full'>
               {Array.from({ length: days}).map((_, index) => {
+                const isActive = index === activeDay;
                 return <Button
                           key={index}
-                          id={index.toString()}
                           onClick={() => {selectWorkoutDay(index)}}
+                          style={{
+                            backgroundColor: isActive ? "lightskyblue" : undefined,
+                            color: isActive ? "white" : undefined,
+                          }}
                         >
                           Day {index + 1}
                         </Button>

@@ -20,7 +20,8 @@ const corsOptions = {
     "http://localhost",
     "http://localhost:5173",
     "https://gym-prog.vercel.app",
-    "https://gym-prog-f0l36yjje-arissj4.vercel.app",
+    "https://gym-prog-git-development-arissj4.vercel.app/",
+    "https://gym-prog-q77ftcpjo-arissj4.vercel.app/",
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -101,6 +102,7 @@ app.post("/api/auth/register", async (req, res) => {
       res.status(201).json({ user: req.session.user});
     });
   } catch (error){
+    console.log(error);
     res.status(500).json({ error: "Registration failed" });
   }
 });

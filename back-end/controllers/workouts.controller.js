@@ -2,7 +2,7 @@ const workoutsModel = require('../models/workouts.model');
 
 exports.getAllWorkouts = async (req, res) => {
   try{
-    const workouts = await workoutsModel.getAllWorkouts();
+    const workouts = await workoutsModel.getAllWorkouts(req.session.user.id);
     res.json(workouts);
   } catch (error) {
     console.error(error);
