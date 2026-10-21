@@ -12,7 +12,8 @@ export default {
     //   body: JSON.stringify(user),
     // })
     // const data = await registerRes.json();
-    return api.post("/auth/register", user)
+    return api
+      .post("/auth/register", user)
       .then((res: { data: object }) => res.data)
       .catch((error: any) => {
         return { error: error.response.data.error };
@@ -28,7 +29,8 @@ export default {
     //   body: JSON.stringify(auth),
     // });
     // const data = await loginRes.json();
-    return api.post("/auth/login", auth)
+    return api
+      .post("/auth/login", auth)
       .then((res: { data: object }) => res.data)
       .catch((error: any) => {
         throw error;
@@ -36,7 +38,8 @@ export default {
   },
 
   async logout(): Promise<object> {
-    return  api.post("/auth/logout")
+    return api
+      .post("/auth/logout")
       .then((res: { data: object }) => res.data)
       .catch((error: any) => {
         throw error;
@@ -44,8 +47,9 @@ export default {
   },
 
   async checkUser(): Promise<object> {
-    return api.get("/auth/user")
-      .then((res: { data: object}) => res.data)
+    return api
+      .get("/auth/user")
+      .then((res: { data: object }) => res.data)
       .catch((error: any) => {
         throw error;
       });
@@ -61,4 +65,4 @@ export default {
       return { error: "Error occurred while checking user" };
     } */
   },
-}
+};

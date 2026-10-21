@@ -1,50 +1,48 @@
-import { Alert, FormControl, TextField } from '@mui/material'
-import { useState } from 'react'
-import type { ButtonModel } from '../interfaces/Button'
-import ButtonComponent from '../components/ButtonComponent'
-import AuthenticationController from '../controllers/AuthenticationController'
-import ErrorComponent from '../components/ErrorComponent'
-import LoadComponent from '../components/LoadComponent'
+import { Alert, FormControl, TextField } from "@mui/material";
+import { useState } from "react";
+import type { ButtonModel } from "../interfaces/Button";
+import ButtonComponent from "../components/ButtonComponent";
+import AuthenticationController from "../controllers/AuthenticationController";
+import ErrorComponent from "../components/ErrorComponent";
+import LoadComponent from "../components/LoadComponent";
 
 type Props = {
   handleNavigate: (route: string) => void;
-}
+};
 
 type userInfo = {
-  name: string,
-  email: string,
-  password: string,
-}
+  name: string;
+  email: string;
+  password: string;
+};
 
 const SignIn = (props: Props) => {
-
   const [pageLoading, setPageLoading] = useState<boolean>(false);
   const [pageError, setPageError] = useState<boolean>(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessageText, setErrorMessageText] = useState<string>("");
 
-
   const [signinInfo, setSigninInfo] = useState<userInfo>({
-    name: '',
-    email: '',
-    password: '',
-  })
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleRegisterClick = async (): Promise<void> => {
     try {
       setPageLoading(true);
       const status = await AuthenticationController.handleRegister(signinInfo);
-      console.log(status)
-      if(status?.user){
+      console.log(status);
+      if (status?.user) {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 3000);
-        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
         await delay(1500);
         props.handleNavigate("/login");
-      } else if(status?.error){
+      } else if (status?.error) {
         setShowErrorMessage(true);
         setErrorMessageText(status?.error);
       }
@@ -53,95 +51,93 @@ const SignIn = (props: Props) => {
     } finally {
       setPageLoading(false);
     }
-  }
+  };
 
   const registerButton: ButtonModel = {
     text: "Register",
     type: "orange",
     style: { width: "220px", marginBottom: "10px" },
     clickEvent: () => handleRegisterClick(),
-  }
+  };
 
   const backButton: ButtonModel = {
     text: "Back",
     type: "white",
     style: { width: "220px" },
     clickEvent: () => props.handleNavigate("/login"),
-  }
+  };
 
   return (
-    <div id='create-user' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
-      <div className='flex-auto justify-center h-max'>
-        <div className='mb-4 flex flex-col items-center justify-center'>
+    <div
+      id="create-user"
+      className="flex-auto h-full p-6 flex-col justify-center w-[70%]"
+    >
+      <div className="flex-auto justify-center h-max">
+        <div className="mb-4 flex flex-col items-center justify-center">
+          {pageLoading ? <LoadComponent /> : null}
 
-          {pageLoading ?
-            <LoadComponent />
-          : null}
+          {showSuccessMessage ? (
+            <Alert>User created successfully! Redirecting to login...</Alert>
+          ) : null}
 
-          {showSuccessMessage ?
-            <Alert>
-              User created successfully! Redirecting to login...
-            </Alert>
-          : null}
+          {showErrorMessage ? (
+            <Alert severity="error">{errorMessageText}</Alert>
+          ) : null}
 
-          {showErrorMessage ?
-            <Alert
-              severity='error'
-            >
-              {errorMessageText}
-            </Alert>
-          : null}
-
-          {pageError ?
+          {pageError ? (
             <ErrorComponent
               text="An error occurred while creating the user. Please try again."
               activated={pageError}
               onClose={() => setPageError(false)}
             />
-          : null}
-
+          ) : null}
 
           <FormControl
-            className='flex items-center justify-between w-5/10 m-1'
-            variant='outlined'
+            className="flex items-center justify-between w-5/10 m-1"
+            variant="outlined"
           >
-
             <TextField
-              className='costume-input w-7/10 border my-4!'
+              className="costume-input w-7/10 border my-4!"
               id="outlined-required"
               label="Name"
               type="text"
               value={signinInfo?.name}
-              onChange={(e) => setSigninInfo({...signinInfo, name: e.target.value})}
+              onChange={(e) =>
+                setSigninInfo({ ...signinInfo, name: e.target.value })
+              }
             />
 
             <TextField
-              className='costume-input w-7/10 border my-4!'
+              className="costume-input w-7/10 border my-4!"
               id="outlined-required"
               label="Email"
               type="email"
               value={signinInfo?.email}
-              onChange={(e) => setSigninInfo({...signinInfo, email: e.target.value})}
+              onChange={(e) =>
+                setSigninInfo({ ...signinInfo, email: e.target.value })
+              }
             />
 
             <TextField
-              className='costume-input w-7/10 border mt-4! mb-2!'
+              className="costume-input w-7/10 border mt-4! mb-2!"
               id="outlined-required"
               label="Password"
               type="password"
               value={signinInfo.password}
-              onChange={(e) => setSigninInfo({...signinInfo, password: e.target.value})}
+              onChange={(e) =>
+                setSigninInfo({ ...signinInfo, password: e.target.value })
+              }
             />
           </FormControl>
         </div>
 
-        <div className='flex flex-col justify-center items-center'>
-          <ButtonComponent model={registerButton}/>
-          <ButtonComponent model={backButton}/>
+        <div className="flex flex-col justify-center items-center">
+          <ButtonComponent model={registerButton} />
+          <ButtonComponent model={backButton} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;

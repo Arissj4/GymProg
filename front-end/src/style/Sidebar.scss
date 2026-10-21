@@ -1,10 +1,10 @@
 @use "./scss/mainStyles.scss" as *;
 
-#sidebar-list{
+#sidebar-list {
   @include costume-flex-box-container($wrap: wrap, $direction: column);
   width: 100%;
 
-  > div{
+  > div {
     width: 100%;
   }
 
@@ -51,19 +51,19 @@
   //   }
   // }
 
-  > div:first-child{
+  > div:first-child {
     @include costume-flex-box-container($wrap: nowrap, $direction: column);
 
-    > li{
+    > li {
       width: 100%;
       margin: 0 0 8px 0;
 
-      &:hover{
+      &:hover {
         cursor: pointer;
         background-color: #f0f0f0;
       }
 
-      > svg{
+      > svg {
         margin: 0 6px 0 0;
       }
     }

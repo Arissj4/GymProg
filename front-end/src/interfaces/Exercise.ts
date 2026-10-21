@@ -1,11 +1,11 @@
 export interface Exercise {
-    id?: string;
-    name: string;
-    day: number;
-    sets: number;
-    reps: number;
-    rest: number;
-    note: string;
+  id?: string;
+  name: string;
+  day: number;
+  sets: number;
+  reps: number;
+  rest: number;
+  note: string;
 }
 
 /* export default class ExerciseItem implements Exercise {

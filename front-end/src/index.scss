@@ -1,59 +1,56 @@
 @use "./style/scss/mainStyles.scss" as *;
 
-#root{
-    @include costume-flex-box-container($justify: center);
-    height: 100dvh;
-    width: 100%;
-    background-color: $lightRootBackgroundColor;
+#root {
+  @include costume-flex-box-container($justify: center);
+  height: 100dvh;
+  width: 100%;
+  background-color: $lightRootBackgroundColor;
 
-    #wrapper{
-        @include costume-flex-box-container($direction: column, $wrap: wrap);
-        @include hidden-scrollbar();
-        height: 100%;
-        // min-width: 360px;
-        max-width: 700px;
-        background-color: $lightWrapperBackgroundColor;
-        box-shadow: #f0f0f0 0px 0px 20px 5px;
+  #wrapper {
+    @include costume-flex-box-container($direction: column, $wrap: wrap);
+    @include hidden-scrollbar();
+    height: 100%;
+    // min-width: 360px;
+    max-width: 700px;
+    background-color: $lightWrapperBackgroundColor;
+    box-shadow: #f0f0f0 0px 0px 20px 5px;
 
-        // Costume classes
+    // Costume classes
 
-        .costume-input{
-            > div {
-                border-radius: 6px;
-            }
-        }
-
-
-        > div {
-            width: 100%;
-
-            #page-header{
-                @include costume-flex-box-container($align: center);
-            }
-
-            #sidebar{
-                @include costume-flex-box-container();
-                background-color: $lightSidebarBackgroundColor;
-                max-width: 30%;
-                min-width: 30%;;
-                height: 100%;
-
-                // @media (max-width: 520px) {
-                //     max-width: 50px;
-                //     min-width: 50px;
-                // }
-            }
-
-            #home{
-                // @include costume-flex-box-container();
-                // height: 100%;
-            }
-        }
-
-
-        > div:last-child{
-            @include costume-flex-box-container();
-        }
-
+    .costume-input {
+      > div {
+        border-radius: 6px;
+      }
     }
+
+    > div {
+      width: 100%;
+
+      #page-header {
+        @include costume-flex-box-container($align: center);
+      }
+
+      #sidebar {
+        @include costume-flex-box-container();
+        background-color: $lightSidebarBackgroundColor;
+        max-width: 30%;
+        min-width: 30%;
+        height: 100%;
+
+        // @media (max-width: 520px) {
+        //     max-width: 50px;
+        //     min-width: 50px;
+        // }
+      }
+
+      #home {
+        // @include costume-flex-box-container();
+        // height: 100%;
+      }
+    }
+
+    > div:last-child {
+      @include costume-flex-box-container();
+    }
+  }
 }

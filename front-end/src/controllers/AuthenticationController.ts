@@ -1,6 +1,5 @@
-import AuthenticationModel from '../models/AuthenticationModel';
-import type { Authentication } from '../interfaces/AuthenticationInterface';
-
+import AuthenticationModel from "../models/AuthenticationModel";
+import type { Authentication } from "../interfaces/AuthenticationInterface";
 
 export default {
   async handleLogin(loginInfo: Authentication): Promise<object> {
@@ -25,10 +24,10 @@ export default {
 
   async handleLogout(): Promise<object> {
     try {
-       const logout = await AuthenticationModel.logout();
-       return logout;
+      const logout = await AuthenticationModel.logout();
+      return logout;
     } catch (error) {
-      return { error: "An error occurred while logging out"};
+      return { error: "An error occurred while logging out" };
     }
   },
 
@@ -41,5 +40,4 @@ export default {
       return { error: "An error occurred while checking user" };
     }
   },
-
-}
+};
