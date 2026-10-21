@@ -1,38 +1,39 @@
-import ButtonComponent from '../components/ButtonComponent';
-import { useState, useEffect } from 'react';
-import type { ButtonModel } from '../interfaces/Button';
-import type { Authentication } from '../interfaces/AuthenticationInterface';
-import AuthenticationController from '../controllers/AuthenticationController';
-import { FormControl, TextField, Link, Alert } from '@mui/material';
-import ErrorComponent from '../components/ErrorComponent';
-import LoadComponent from '../components/LoadComponent';
-import type { User } from '../interfaces/User';
-
+import ButtonComponent from "../components/ButtonComponent";
+import { useState, useEffect } from "react";
+import type { ButtonModel } from "../interfaces/Button";
+import type { Authentication } from "../interfaces/AuthenticationInterface";
+import AuthenticationController from "../controllers/AuthenticationController";
+import { FormControl, TextField, Link, Alert } from "@mui/material";
+import ErrorComponent from "../components/ErrorComponent";
+import LoadComponent from "../components/LoadComponent";
+import type { User } from "../interfaces/User";
 
 type Props = {
   handleNavigate: (route: string) => void;
   setUser: (user: User) => void;
-}
+};
 
-
-function Login ( props: Props) {
-
+function Login(props: Props) {
   // Variables Section
   const [pageLoading, setPageLoading] = useState<boolean>(false);
   const [pageError, setPageError] = useState<boolean>(false);
 
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
-  const [showLoginErrorAlert, setShowLoginErrorAlert] = useState<boolean>(false);
-  const [loginInfo, setLoginInfo] = useState<Authentication>({email: "", password: ""});
+  const [showLoginErrorAlert, setShowLoginErrorAlert] =
+    useState<boolean>(false);
+  const [loginInfo, setLoginInfo] = useState<Authentication>({
+    email: "",
+    password: "",
+  });
 
   async function handleLoginClick(): Promise<void> {
-    try{
+    try {
       setPageLoading(true);
       const user: any = await AuthenticationController.handleLogin(loginInfo);
-      if(user?.error){
+      if (user?.error) {
         setLoginStatus(true);
         setShowLoginErrorAlert(true);
-      } else{
+      } else {
         localStorage.setItem("user", JSON.stringify(user.user));
         props.setUser(user.user);
         props.handleNavigate("/");
@@ -42,7 +43,6 @@ function Login ( props: Props) {
     } finally {
       setPageLoading(false);
     }
-
   }
 
   /* useEffect(() => {
@@ -56,10 +56,10 @@ function Login ( props: Props) {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/health`).then((res) => {
-      if(res.status === 200){
+      if (res.status === 200) {
         console.log("API is healthy");
       }
-    })
+    });
   }, []);
 
   const loginButton: ButtonModel = {
@@ -74,73 +74,83 @@ function Login ( props: Props) {
     type: "white",
     style: { width: "220px" },
     clickEvent: () => props.handleNavigate("/createuser"),
-  }
+  };
 
   return (
-    <div id='login' className='flex-auto h-full p-6 flex-col justify-center w-[70%]'>
-      <div className='flex-auto justify-center h-max'>
-        <div className='mb-4 flex flex-col items-center justify-center'>
-
+    <div
+      id="login"
+      className="flex-auto h-full p-6 flex-col justify-center w-[70%]"
+    >
+      <div className="flex-auto justify-center h-max">
+        <div className="mb-4 flex flex-col items-center justify-center">
           {pageLoading ? <LoadComponent /> : null}
 
-          {pageError ?
+          {pageError ? (
             <ErrorComponent
-              text='An error occurred while logging in. Please try again later.'
+              text="An error occurred while logging in. Please try again later."
               activated={pageError}
               onClose={() => setPageError(false)}
             />
-          : null}
+          ) : null}
 
-          {showLoginErrorAlert ?
+          {showLoginErrorAlert ? (
             <Alert
               severity="error"
-              onClose = {() => setShowLoginErrorAlert(false)}
+              onClose={() => setShowLoginErrorAlert(false)}
               className={`mb-4 ${showLoginErrorAlert ? "flex" : "hidden"}`}
             >
               Invalid email or password
             </Alert>
-          : null}
+          ) : null}
 
           <FormControl
-            className='flex items-center justify-between w-5/10 m-1'
+            className="flex items-center justify-between w-5/10 m-1"
             error={loginStatus}
-            variant='outlined'
+            variant="outlined"
           >
             <TextField
-              className='costume-input w-7/10 border my-4!'
+              className="costume-input w-7/10 border my-4!"
               id="outlined-required"
               label="Email"
               type="email"
               error={loginStatus}
               value={loginInfo?.email}
-              onChange={(e) => setLoginInfo({...loginInfo, email: e.target.value})}
+              onChange={(e) =>
+                setLoginInfo({ ...loginInfo, email: e.target.value })
+              }
             />
 
             <TextField
-              className='costume-input w-7/10 border mt-4! mb-2!'
+              className="costume-input w-7/10 border mt-4! mb-2!"
               id="outlined-required"
               label="Password"
               type="password"
               error={loginStatus}
               value={loginInfo.password}
-              onChange={(e) => setLoginInfo({...loginInfo, password: e.target.value})}
+              onChange={(e) =>
+                setLoginInfo({ ...loginInfo, password: e.target.value })
+              }
             />
 
-            <div className='flex items-center justify-between w-7/10 m-1'>
-              <Link href='/createuser' underline='none' className='text-sm! text-gray-500!'>
+            <div className="flex items-center justify-between w-7/10 m-1">
+              <Link
+                href="/createuser"
+                underline="none"
+                className="text-sm! text-gray-500!"
+              >
                 Do not have an account?
               </Link>
             </div>
           </FormControl>
         </div>
 
-        <div className='flex flex-col justify-center items-center'>
-          <ButtonComponent model={loginButton}/>
-          <ButtonComponent model={registerButton}/>
+        <div className="flex flex-col justify-center items-center">
+          <ButtonComponent model={loginButton} />
+          <ButtonComponent model={registerButton} />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
