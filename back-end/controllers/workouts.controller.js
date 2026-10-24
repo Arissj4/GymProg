@@ -5,7 +5,7 @@ exports.getAllWorkouts = async (req, res) => {
     const workouts = await workoutsModel.getAllWorkouts(req.session.user.id);
     res.json(workouts);
   } catch (error) {
-    console.error(error);
+    console.error("Loading All Workouts failed:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -20,6 +20,7 @@ exports.createWorkout = async (req, res) => {
     );
     res.status(201).json(newWorkout);
   } catch (error) {
+    console.error("Creation Workout failed:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
