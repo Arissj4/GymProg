@@ -107,7 +107,7 @@ app.post("/api/auth/register", async (req, res) => {
       res.status(201).json({ user: req.session.user });
     });
   } catch (error) {
-    console.log(error);
+    console.log("BE - User generation failed:", error);
     res.status(500).json({ error: "Registration failed" });
   }
 });
@@ -146,6 +146,7 @@ app.post("/api/auth/login", async (req, res) => {
       res.json({ user: req.session.user });
     });
   } catch (error) {
+    console.log("BE - User login failed:", error);
     res.status(500).json({ error: "Login failed" });
   }
 });
