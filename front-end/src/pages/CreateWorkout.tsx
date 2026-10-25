@@ -76,7 +76,7 @@ function CreateWorkout(props: Props) {
       }
       const res = await WorkoutsController.handleCreateWorkout(payload); */
     } catch (error) {
-      console.log(error);
+      console.log("FE - User Creation failed:", error);
     }
   }
 

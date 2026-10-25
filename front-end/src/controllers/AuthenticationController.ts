@@ -27,6 +27,7 @@ export default {
       const logout = await AuthenticationModel.logout();
       return logout;
     } catch (error) {
+      console.log("BE - Logout user failed:", error);
       return { error: "An error occurred while logging out" };
     }
   },

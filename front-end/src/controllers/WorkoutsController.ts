@@ -7,7 +7,7 @@ export default {
       const workouts = await WorkoutModel.getWorkouts();
       return workouts;
     } catch (error) {
-      console.error("Loading Workouts failed:", error);
+      console.error("FE - Loading Workouts failed:", error);
       return { error: "An error occurred while getting workouts" };
     }
   },
@@ -17,7 +17,7 @@ export default {
       const workout = await WorkoutModel.createWorkout(payload);
       return workout;
     } catch (error) {
-      console.error("Creation Workout failed:", error);
+      console.error("FE - Creation Workout failed:", error);
       return { error: "An error occurred while creating workout" };
     }
   },
