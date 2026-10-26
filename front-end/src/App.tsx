@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Sidebar from "./pages/Sidebar";
 import type { User } from "./interfaces/User";
 import PageHeader from "./pages/PageHeader";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CreateWorkout from "./pages/CreateWorkout";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
@@ -30,28 +30,31 @@ function App() {
     }
     return { id: 0, name: "MyProg", email: "", authenticated: false };
   });
-  const checkedLogin = useRef<boolean>(false);
-  const location = useLocation();
 
+  const navigate = useNavigate();
+  function handleNavigate(route: string): void {
+    navigate(route);
+  }
+
+  // const checkedLogin = useRef<boolean>(false);
+  const location = useLocation();
   useEffect(() => {
-    async function checkUserLogin() {
+    function checkUserLogin() {
       if (user.authenticated) return;
 
       if (location.pathname === "/createuser" || location.pathname === "/login")
         return;
 
-      if (checkedLogin.current) return;
-      checkedLogin.current = true;
+      // if (checkedLogin.current) return;
+      // checkedLogin.current = true;
 
-      handleNavigate("/login");
+      navigate("/login");
     }
 
     checkUserLogin();
-  }, []);
+  }, [user.authenticated, location.pathname, navigate]);
 
-  let navigate = useNavigate();
-  let [windowSize, setWindowSize] = useState(window.innerWidth);
-
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
   useEffect(() => {
     function handleResize() {
       setWindowSize(window.innerWidth);
@@ -60,10 +63,6 @@ function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  function handleNavigate(route: string): void {
-    navigate(route);
-  }
 
   return (
     <>
