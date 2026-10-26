@@ -1,21 +1,19 @@
 import AuthenticationModel from "../models/AuthenticationModel";
-import type { Authentication } from "../interfaces/AuthenticationInterface";
+import type {Authentication} from "../interfaces/AuthenticationInterface";
 
 export default {
   async handleLogin(loginInfo: Authentication): Promise<object> {
     try {
-      const auth = await AuthenticationModel.login(loginInfo);
-      return auth;
+      return  await AuthenticationModel.login(loginInfo);
     } catch (error) {
       console.error("Error occurred while logging in:", error);
       return { error: "An error occurred while logging in" };
     }
   },
 
-  async handleRegister(user: Authentication): Promise<any | object> {
+  async handleRegister(user: Authentication): Promise<object> {
     try {
-      const result = await AuthenticationModel.register(user);
-      return result;
+      return await AuthenticationModel.register(user);
     } catch (error) {
       console.error("Error occurred while registering:", error);
       return { error: "An error occurred while registering" };
@@ -24,8 +22,7 @@ export default {
 
   async handleLogout(): Promise<object> {
     try {
-      const logout = await AuthenticationModel.logout();
-      return logout;
+      return await AuthenticationModel.logout();
     } catch (error) {
       console.log("BE - Logout user failed:", error);
       return { error: "An error occurred while logging out" };
@@ -34,8 +31,7 @@ export default {
 
   async checkUser(): Promise<object> {
     try {
-      const user = await AuthenticationModel.checkUser();
-      return user;
+      return await AuthenticationModel.checkUser();
     } catch (error) {
       console.error("Error occurred while checking user:", error);
       return { error: "An error occurred while checking user" };
