@@ -1,6 +1,6 @@
 import type { Authentication } from "../interfaces/AuthenticationInterface";
-// @ts-ignore
 import api from "./api";
+import axios from "axios";
 
 export default {
   async register(user: Authentication): Promise<object> {
@@ -15,8 +15,13 @@ export default {
     return api
       .post("/auth/register", user)
       .then((res: { data: object }) => res.data)
-      .catch((error: any) => {
-        return { error: error.response.data.error };
+      .catch((error: unknown) => {
+        if (axios.isAxiosError(error)) {
+          return {
+            error: error.response?.data?.error ?? "Registration failed",
+          };
+        }
+        return { error: "Unexpected error occurred" };
       });
   },
 
@@ -32,8 +37,13 @@ export default {
     return api
       .post("/auth/login", auth)
       .then((res: { data: object }) => res.data)
-      .catch((error: any) => {
-        throw error;
+      .catch((error: unknown) => {
+        if (axios.isAxiosError(error)) {
+          return {
+            error: error.response?.data?.error ?? "Registration failed",
+          };
+        }
+        return { error: "Unexpected error occurred" };
       });
   },
 
@@ -41,8 +51,13 @@ export default {
     return api
       .post("/auth/logout")
       .then((res: { data: object }) => res.data)
-      .catch((error: any) => {
-        throw error;
+      .catch((error: unknown) => {
+        if (axios.isAxiosError(error)) {
+          return {
+            error: error.response?.data?.error ?? "Registration failed",
+          };
+        }
+        return { error: "Unexpected error occurred" };
       });
   },
 
@@ -50,8 +65,13 @@ export default {
     return api
       .get("/auth/user")
       .then((res: { data: object }) => res.data)
-      .catch((error: any) => {
-        throw error;
+      .catch((error: unknown) => {
+        if (axios.isAxiosError(error)) {
+          return {
+            error: error.response?.data?.error ?? "Registration failed",
+          };
+        }
+        return { error: "Unexpected error occurred" };
       });
     /* try {
       const res = await fetch("/api/auth/user");

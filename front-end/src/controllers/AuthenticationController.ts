@@ -1,10 +1,10 @@
 import AuthenticationModel from "../models/AuthenticationModel";
-import type {Authentication} from "../interfaces/AuthenticationInterface";
+import type { Authentication } from "../interfaces/AuthenticationInterface";
 
 export default {
   async handleLogin(loginInfo: Authentication): Promise<object> {
     try {
-      return  await AuthenticationModel.login(loginInfo);
+      return await AuthenticationModel.login(loginInfo);
     } catch (error) {
       console.error("Error occurred while logging in:", error);
       return { error: "An error occurred while logging in" };
