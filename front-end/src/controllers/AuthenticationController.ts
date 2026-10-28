@@ -1,8 +1,13 @@
 import AuthenticationModel from "../models/AuthenticationModel";
-import type { Authentication } from "../interfaces/AuthenticationInterface";
+import type {
+  AuthenticationInformation,
+  AuthResponse,
+} from "../interfaces/AuthenticationInterface";
 
 export default {
-  async handleLogin(loginInfo: Authentication): Promise<object> {
+  async handleLogin(
+    loginInfo: AuthenticationInformation,
+  ): Promise<AuthResponse> {
     try {
       return await AuthenticationModel.login(loginInfo);
     } catch (error) {
@@ -11,7 +16,7 @@ export default {
     }
   },
 
-  async handleRegister(user: Authentication): Promise<object> {
+  async handleRegister(user: AuthenticationInformation): Promise<AuthResponse> {
     try {
       return await AuthenticationModel.register(user);
     } catch (error) {

@@ -1,7 +1,10 @@
 import ButtonComponent from "../components/ButtonComponent";
 import { useState, useEffect } from "react";
 import type { ButtonModel } from "../interfaces/Button";
-import type { Authentication } from "../interfaces/AuthenticationInterface";
+import type {
+  AuthenticationInformation,
+  AuthResponse,
+} from "../interfaces/AuthenticationInterface";
 import AuthenticationController from "../controllers/AuthenticationController";
 import { FormControl, TextField, Link, Alert } from "@mui/material";
 import ErrorComponent from "../components/ErrorComponent";
@@ -21,7 +24,7 @@ function Login(props: Props) {
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
   const [showLoginErrorAlert, setShowLoginErrorAlert] =
     useState<boolean>(false);
-  const [loginInfo, setLoginInfo] = useState<Authentication>({
+  const [loginInfo, setLoginInfo] = useState<AuthenticationInformation>({
     email: "",
     password: "",
   });
@@ -29,16 +32,18 @@ function Login(props: Props) {
   async function handleLoginClick(): Promise<void> {
     try {
       setPageLoading(true);
-      const user: any = await AuthenticationController.handleLogin(loginInfo);
-      if (user?.error) {
+      const response: AuthResponse =
+        await AuthenticationController.handleLogin(loginInfo);
+      if ("error" in response) {
         setLoginStatus(true);
         setShowLoginErrorAlert(true);
-      } else {
-        localStorage.setItem("user", JSON.stringify(user.user));
-        props.setUser(user.user);
-        props.handleNavigate("/");
+        return;
       }
-    } catch (error) {
+      localStorage.setItem("user", JSON.stringify(response.user));
+      props.setUser(response.user);
+      props.handleNavigate("/");
+    } catch (error: unknown) {
+      console.error("Login failed:", error);
       setPageError(true);
     } finally {
       setPageLoading(false);

@@ -1,9 +1,14 @@
-import type { Authentication } from "../interfaces/AuthenticationInterface";
+import type {
+  AuthenticationInformation,
+  AuthErrorResponse,
+  AuthResponse,
+  AuthSuccessResponse,
+} from "../interfaces/AuthenticationInterface";
 import api from "./api";
 import axios from "axios";
 
 export default {
-  async register(user: Authentication): Promise<object> {
+  async register(user: AuthenticationInformation): Promise<AuthResponse> {
     // const registerRes = await fetch(`/api/auth/register`, {
     //   method: "POST",
     //   headers: {
@@ -12,7 +17,8 @@ export default {
     //   body: JSON.stringify(user),
     // })
     // const data = await registerRes.json();
-    return api
+
+    /*return api
       .post("/auth/register", user)
       .then((res: { data: object }) => res.data)
       .catch((error: unknown) => {
@@ -22,10 +28,26 @@ export default {
           };
         }
         return { error: "Unexpected error occurred" };
-      });
+      });*/
+
+    try {
+      const response = await api.post<AuthSuccessResponse>(
+        "/auth/register",
+        user,
+      );
+
+      return response.data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError<AuthErrorResponse>(error)) {
+        return {
+          error: error.response?.data?.error ?? "Registration failed",
+        };
+      }
+      return { error: "Unexpected error occurred" };
+    }
   },
 
-  async login(auth: Authentication): Promise<object> {
+  async login(auth: AuthenticationInformation): Promise<AuthResponse> {
     // const loginRes = await fetch("/api/auth/login", {
     //   method: "POST",
     //   headers: {
@@ -34,7 +56,7 @@ export default {
     //   body: JSON.stringify(auth),
     // });
     // const data = await loginRes.json();
-    return api
+    /*return api
       .post("/auth/login", auth)
       .then((res: { data: object }) => res.data)
       .catch((error: unknown) => {
@@ -44,7 +66,21 @@ export default {
           };
         }
         return { error: "Unexpected error occurred" };
-      });
+      });*/
+
+    try {
+      const response = await api.post<AuthSuccessResponse>("/auth/login", auth);
+
+      return response.data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError<AuthErrorResponse>(error)) {
+        return {
+          error: error.response?.data?.error ?? "Login failed",
+        };
+      }
+
+      return { error: "Unexpected error occurred" };
+    }
   },
 
   async logout(): Promise<object> {

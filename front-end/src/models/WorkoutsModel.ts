@@ -8,13 +8,13 @@ export default {
       .get("/workouts")
       .then((res: { data: object }) => res.data)
       .catch((error: unknown) => {
-        if(axios.isAxiosError(error)){
+        if (axios.isAxiosError(error)) {
           return {
             error: error.response?.data?.error ?? "Internal Server Error",
           };
         }
 
-        return {error: "Unexpected error occurred while getting workouts"};
+        return { error: "Unexpected error occurred while getting workouts" };
       });
   },
 
@@ -23,13 +23,13 @@ export default {
       .post("/workouts", payload)
       .then((res: { data: object }) => res.data)
       .catch((error: unknown) => {
-        if(axios.isAxiosError(error)){
+        if (axios.isAxiosError(error)) {
           return {
             error: error.response?.data?.error ?? "Internal Server Error",
           };
         }
 
-        return {error: "Unexpected error occurred while creating workout"};
+        return { error: "Unexpected error occurred while creating workout" };
       });
   },
 };
