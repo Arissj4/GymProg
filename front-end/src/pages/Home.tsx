@@ -3,6 +3,8 @@ type Props = {
 };
 
 function Home(props: Props) {
+  console.log("Actions Checks");
+
   return (
     <div
       id="home"
