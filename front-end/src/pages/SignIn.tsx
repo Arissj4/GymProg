@@ -5,6 +5,7 @@ import ButtonComponent from "../components/ButtonComponent";
 import AuthenticationController from "../controllers/AuthenticationController";
 import ErrorComponent from "../components/ErrorComponent";
 import LoadComponent from "../components/LoadComponent";
+import type { AuthResponse } from "../interfaces/AuthenticationInterface.ts";
 
 type Props = {
   handleNavigate: (route: string) => void;
@@ -32,21 +33,22 @@ const SignIn = (props: Props) => {
   const handleRegisterClick = async (): Promise<void> => {
     try {
       setPageLoading(true);
-      const status = await AuthenticationController.handleRegister(signinInfo);
-      console.log(status);
-      if (status?.user) {
-        setShowSuccessMessage(true);
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-        }, 3000);
-        const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-        await delay(1500);
-        props.handleNavigate("/login");
-      } else if (status?.error) {
+      const status: AuthResponse =
+        await AuthenticationController.handleRegister(signinInfo);
+      if ("error" in status) {
         setShowErrorMessage(true);
         setErrorMessageText(status?.error);
+        return;
       }
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+      const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+      await delay(1500);
+      props.handleNavigate("/login");
     } catch (error) {
+      console.log(error);
       setPageError(true);
     } finally {
       setPageLoading(false);
