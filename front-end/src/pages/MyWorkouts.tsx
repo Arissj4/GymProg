@@ -16,7 +16,7 @@ function MyWorkouts(props: pageProps): ReactElement {
   const [pageError, setPageError] = useState<boolean>(false);
 
   const [workouts, setWorkouts] = useState<[]>([]);
-  let workoutsLoaded = useRef<boolean>(false);
+  const workoutsLoaded = useRef<boolean>(false);
 
   useEffect(() => {
     async function getWorkouts() {
@@ -32,6 +32,7 @@ function MyWorkouts(props: pageProps): ReactElement {
           setWorkouts(res as []);
         }
       } catch (error) {
+        console.log(error);
         setPageError(true);
       } finally {
         setPageLoading(false);
