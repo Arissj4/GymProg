@@ -44,6 +44,7 @@ const Profile = (props: Props) => {
         });
         props.handleNavigate("/login");
       } catch (error) {
+        console.log(error);
         setPageError(true);
       } finally {
         setPageLoading(false);
