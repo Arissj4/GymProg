@@ -29,6 +29,7 @@ export default function NumberSpinner({
       {...other}
       render={(props, state) => (
         <FormControl
+          className={"w-full"}
           size={size}
           ref={props.ref}
           disabled={state.disabled}
