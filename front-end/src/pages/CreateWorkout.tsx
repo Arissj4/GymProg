@@ -5,7 +5,9 @@ import { useState } from "react";
 import type { User } from "../interfaces/User";
 import ButtonComponent from "../components/ButtonComponent";
 import type { ButtonModel } from "../interfaces/Button";
+import type { Exercise } from "../interfaces/Exercise.ts";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import NumberSpinner from "../components/NumberSpinner.tsx";
 
 type Props = {
   user: User;
@@ -19,7 +21,8 @@ function CreateWorkout(props: Props) {
   // const [errorMessageText, setErrorMessageText] = useState<string>("");
   const [workoutTitle, setWorkoutTitle] = useState<string>("");
   const [days, setDays] = useState<number>(0);
-  // const [exercisesList, setExercisesList] = useState<Exercise[]>([]);
+  const [activeDay, setActiveDay] = useState<number>(0);
+  const [exercisesList, setExercisesList] = useState<Exercise[]>([]);
 
   const addDayButton: ButtonModel = {
     text: "Add Day",
@@ -27,11 +30,28 @@ function CreateWorkout(props: Props) {
     icon: faPlus,
     clickEvent: () => {
       if (days < 7) setDays((prev) => prev + 1);
-      selectWorkoutDay(0);
+      // selectWorkoutDay(0);
     },
   };
 
-  const [activeDay, setActiveDay] = useState<number>(0);
+  const addExerciseButton: ButtonModel = {
+    text: "Add Exercise",
+    type: "orange",
+    icon: faPlus,
+    clickEvent: () => {
+      setExercisesList((prev) => [
+        ...prev,
+        {
+          name: "",
+          day: activeDay,
+          sets: 0,
+          reps: 0,
+          rest: 0,
+          note: "",
+        },
+      ]);
+    },
+  };
 
   function selectWorkoutDay(btnNumber: number): void {
     setActiveDay(btnNumber);
@@ -127,6 +147,54 @@ function CreateWorkout(props: Props) {
                 );
               })}
             </ButtonGroup>
+          </div>
+
+          <div
+            className={"mt-4"}
+            style={{
+              display: days <= 0 ? "none" : undefined,
+            }}
+          >
+            <ButtonComponent model={addExerciseButton} />
+            <div className={"mt-2"}>
+              {exercisesList.map((exerciseInfo) => {
+                if (exerciseInfo.day === activeDay) {
+                  return (
+                    <div
+                      className={"border border-gray-200 rounded-lg m-1 p-2"}
+                    >
+                      <div>
+                        <input
+                          type={"text"}
+                          placeholder={"Exercise Name"}
+                          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                          value={exerciseInfo.name}
+                          onChange={(e) => (exerciseInfo.name = e.target.value)}
+                        />
+                      </div>
+                      <div className={"flex justify-between"}>
+                        <div className={"w-[45%]"}>
+                          <NumberSpinner
+                            label={"Sets"}
+                            min={0}
+                            defaultValue={0}
+                            size={"small"}
+                          />
+                        </div>
+                        <div className={"w-[45%]"}>
+                          <NumberSpinner
+                            label={"Reps"}
+                            min={0}
+                            defaultValue={0}
+                            size={"small"}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+            </div>
           </div>
         </div>
       </form>
