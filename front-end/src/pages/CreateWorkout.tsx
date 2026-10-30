@@ -190,6 +190,24 @@ function CreateWorkout(props: Props) {
                           />
                         </div>
                       </div>
+                      <div className={"flex justify-between"}>
+                        <div className={"w-[45%]"}>
+                          <NumberSpinner
+                            label={"Rest"}
+                            min={0}
+                            defaultValue={0}
+                            size={"small"}
+                          />
+                        </div>
+                        <div className={"w-[45%]"}>
+                          <NumberSpinner
+                            label={"Reps"}
+                            min={0}
+                            defaultValue={0}
+                            size={"small"}
+                          />
+                        </div>
+                      </div>
                     </div>
                   );
                 }
