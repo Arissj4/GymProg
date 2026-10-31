@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "@mui/material";
+import {Button, ButtonGroup, TextField} from "@mui/material";
 import { useState } from "react";
 // import WorkoutsController from '../controllers/WorkoutsController';
 // import type { Workout } from '../interfaces/Workout';
@@ -157,11 +157,12 @@ function CreateWorkout(props: Props) {
           >
             <ButtonComponent model={addExerciseButton} />
             <div className={"mt-2"}>
-              {exercisesList.map((exerciseInfo) => {
+              {exercisesList.map((exerciseInfo, index) => {
                 if (exerciseInfo.day === activeDay) {
                   return (
                     <div
                       className={"border border-gray-200 rounded-lg m-1 p-2"}
+                      key={index}
                     >
                       <div>
                         <input
@@ -179,6 +180,7 @@ function CreateWorkout(props: Props) {
                             min={0}
                             defaultValue={0}
                             size={"small"}
+                            value={exerciseInfo.sets}
                           />
                         </div>
                         <div className={"w-[45%]"}>
@@ -187,24 +189,33 @@ function CreateWorkout(props: Props) {
                             min={0}
                             defaultValue={0}
                             size={"small"}
+                            value={exerciseInfo.reps}
                           />
                         </div>
                       </div>
-                      <div className={"flex justify-between"}>
+                      <div className={"flex mt-4 justify-between"}>
                         <div className={"w-[45%]"}>
                           <NumberSpinner
                             label={"Rest"}
                             min={0}
                             defaultValue={0}
                             size={"small"}
+                            value={exerciseInfo.rest}
                           />
                         </div>
-                        <div className={"w-[45%]"}>
-                          <NumberSpinner
-                            label={"Reps"}
-                            min={0}
-                            defaultValue={0}
-                            size={"small"}
+                        <div className={"w-[45%] flex items-end"}>
+                          <TextField
+                            id="outlined-multiline-flexible"
+                            label="Note"
+                            multiline
+                            maxRows={4}
+                            defaultValue={exerciseInfo.note}
+                            onChange={e => {
+                              console.log(index);
+                              console.log(exercisesList[index]);
+                              exercisesList[index].note += e.target.value;
+                              console.log(exercisesList[index]);
+                            } }
                           />
                         </div>
                       </div>
