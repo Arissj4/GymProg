@@ -226,14 +226,15 @@ function CreateWorkout(props: Props) {
             </div>
           </div>
         </div>
+
+        <Button
+          onClick={() => newWorkout()}
+          className="bg-orange-500 text-white mt-4"
+        >
+          Create Workout
+        </Button>
       </form>
 
-      <Button
-        onClick={() => newWorkout()}
-        className="bg-orange-500 text-white mt-4"
-      >
-        Create Workout
-      </Button>
     </div>
   );
 }
