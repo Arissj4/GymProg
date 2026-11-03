@@ -143,7 +143,17 @@ app.post("/api/auth/login", async (req, res) => {
         authenticated: true,
       };
 
-      res.json({ user: req.session.user });
+      req.session.save((err) => {
+        if (err) {
+          console.error("Session save failed:", err);
+          return res.status(500).json({ error: "Session save failed" });
+        }
+
+        console.log("Session saved successfully:", req.sessionID);
+
+        return res.json({ user: req.session.user });
+      });
+      // res.json({ user: req.session.user });
     });
   } catch (error) {
     console.log("BE - User login failed:", error);
