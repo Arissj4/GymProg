@@ -30,14 +30,14 @@ const Profile = (props: Props) => {
         localStorage.setItem(
           "user",
           JSON.stringify({
-            id: 0,
+            id: "0",
             name: "MyProg",
             email: "",
             authenticated: false,
           }),
         );
         props.setUser({
-          id: 0,
+          id: "0",
           name: "MyProg",
           email: "",
           authenticated: false,
