@@ -1,4 +1,6 @@
 // Data send to the BE side for registration
+import type { User } from "./User.ts";
+
 export interface AuthenticationInformation {
   email: string;
   verifyEmail?: string;
@@ -16,7 +18,7 @@ export interface AuthenticatedUser {
 
 // Successful authentication response
 export interface AuthSuccessResponse {
-  user: AuthenticatedUser;
+  user: User;
 }
 
 // Failed authentication response
