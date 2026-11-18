@@ -12,35 +12,41 @@ import CreateWorkout from "./pages/CreateWorkout";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import { Analytics } from "@vercel/analytics/react";
+import AuthenticationModel from "./models/AuthenticationModel.ts";
+import LoadComponent from "./components/LoadComponent.tsx";
 
 function App() {
-  const [user, setUser] = useState<User>(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      try {
-        const parsed = JSON.parse(savedUser);
-        if (parsed.authenticated) {
-          return parsed;
-        } else if (parsed.user && parsed.user.authenticated) {
-          return parsed.user;
-        }
-      } catch (e) {
-        console.error("Failed to parse user from local storage", e);
-      }
-    }
-    return { id: 0, name: "MyProg", email: "", authenticated: false };
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   function handleNavigate(route: string): void {
     navigate(route);
   }
 
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const res = await AuthenticationModel.checkUser();
+        setUser(res as User);
+      } catch (error) {
+        console.log(error);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadUser();
+  }, []);
+
   // const checkedLogin = useRef<boolean>(false);
   const location = useLocation();
   useEffect(() => {
     function checkUserLogin() {
-      if (user.authenticated) return;
+      if (loading) return;
+
+      if (user?.authenticated) return;
 
       if (location.pathname === "/createuser" || location.pathname === "/login")
         return;
@@ -52,7 +58,7 @@ function App() {
     }
 
     checkUserLogin();
-  }, [user.authenticated, location.pathname, navigate]);
+  }, [location.pathname, navigate, user, loading]);
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   useEffect(() => {
@@ -64,6 +70,8 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  if (loading) return <LoadComponent />;
+
   return (
     <>
       <div id="wrapper" className="lg:rounded-[30px]">
@@ -71,7 +79,7 @@ function App() {
           <PageHeader user={user} handleNavigate={handleNavigate} />
         </div>
 
-        {user.authenticated ? (
+        {user?.authenticated ? (
           <div className="flex flex-row">
             <Sidebar
               user={user}

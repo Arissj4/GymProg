@@ -1,7 +1,7 @@
 import { type User } from "../interfaces/User";
 
 type Props = {
-  user: User;
+  user: User | null;
   handleNavigate: (route: string) => void;
 };
 
