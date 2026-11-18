@@ -28,7 +28,7 @@ function App() {
     async function loadUser() {
       try {
         const res = await AuthenticationModel.checkUser();
-        setUser(res as User);
+        if ("user" in res) setUser(res.user as User);
       } catch (error) {
         console.log(error);
         setUser(null);
