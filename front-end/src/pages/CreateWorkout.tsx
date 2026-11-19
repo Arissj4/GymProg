@@ -204,8 +204,12 @@ function CreateWorkout(props: Props) {
                           type={"text"}
                           placeholder={"Exercise Name"}
                           className="w-full p-2 border border-gray-300 rounded-md mb-4"
-                          value={exerciseInfo.name}
-                          onChange={(e) => (exerciseInfo.name = e.target.value)}
+                          defaultValue={exerciseInfo.name}
+                          onChange={(e) =>
+                            updateExercise(exerciseInfo.id, {
+                              name: e.target.value,
+                            })
+                          }
                         />
                       </div>
                       <div className={"flex justify-between"}>
@@ -245,12 +249,11 @@ function CreateWorkout(props: Props) {
                             multiline
                             maxRows={4}
                             defaultValue={exerciseInfo.note}
-                            onChange={(e) => {
-                              console.log(index);
-                              console.log(exercisesList[index]);
-                              exercisesList[index].note += e.target.value;
-                              console.log(exercisesList[index]);
-                            }}
+                            onChange={(e) =>
+                              updateExercise(exerciseInfo.id, {
+                                note: e.target.value,
+                              })
+                            }
                           />
                         </div>
                       </div>
