@@ -62,6 +62,17 @@ function CreateWorkout(props: Props) {
     );
   };
 
+  const updateExercise = (
+    id: string | undefined,
+    changes: Partial<Exercise>,
+  ) => {
+    setExercisesList((prev) =>
+      prev.map((exercise) =>
+        exercise.id === id ? { ...exercise, ...changes } : exercise,
+      ),
+    );
+  };
+
   function selectWorkoutDay(btnNumber: number): void {
     setActiveDay(btnNumber);
     // let btn = document.getElementById(btnNumber.toString());
