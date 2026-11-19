@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, TextField} from "@mui/material";
+import { Button, ButtonGroup, TextField } from "@mui/material";
 import { useState } from "react";
 // import WorkoutsController from '../controllers/WorkoutsController';
 // import type { Workout } from '../interfaces/Workout';
@@ -103,7 +103,7 @@ function CreateWorkout(props: Props) {
   return (
     <div
       id="create-workout"
-      className="flex-auto h-full p-6 flex-col justify-center w-[70%]"
+      className="flex flex-auto h-full overflow-clip p-6 flex-col justify-center w-[70%]"
     >
       <div className="mb-6">
         <span className="text-[24px] font-[1000] text-orange-500 block w-full h-fit text-center">
@@ -111,8 +111,8 @@ function CreateWorkout(props: Props) {
         </span>
       </div>
 
-      <form className="">
-        <div>
+      <form className="h-full flex flex-col flex-auto overflow-hidden justify-between">
+        <div className="h-full flex flex-col flex-auto overflow-hidden">
           <div>
             <input
               type="text"
@@ -150,13 +150,13 @@ function CreateWorkout(props: Props) {
           </div>
 
           <div
-            className={"mt-4"}
+            className={"mt-4 h-full overflow-hidden flex flex-col"}
             style={{
               display: days <= 0 ? "none" : undefined,
             }}
           >
             <ButtonComponent model={addExerciseButton} />
-            <div className={"mt-2"}>
+            <div className={"h-full overflow-scroll mt-2"}>
               {exercisesList.map((exerciseInfo, index) => {
                 if (exerciseInfo.day === activeDay) {
                   return (
@@ -210,12 +210,12 @@ function CreateWorkout(props: Props) {
                             multiline
                             maxRows={4}
                             defaultValue={exerciseInfo.note}
-                            onChange={e => {
+                            onChange={(e) => {
                               console.log(index);
                               console.log(exercisesList[index]);
                               exercisesList[index].note += e.target.value;
                               console.log(exercisesList[index]);
-                            } }
+                            }}
                           />
                         </div>
                       </div>
@@ -227,14 +227,15 @@ function CreateWorkout(props: Props) {
           </div>
         </div>
 
-        <Button
-          onClick={() => newWorkout()}
-          className="bg-orange-500 text-white mt-4"
-        >
-          Create Workout
-        </Button>
+        <div className="w-full flex justify-center pt-2 mt-2 border-t border-gray-200">
+          <Button
+            onClick={() => newWorkout()}
+            className="bg-orange-500 text-white mt-4"
+          >
+            Create Workout
+          </Button>
+        </div>
       </form>
-
     </div>
   );
 }

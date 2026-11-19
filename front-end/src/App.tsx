@@ -80,7 +80,7 @@ function App() {
         </div>
 
         {user?.authenticated ? (
-          <div className="flex flex-row">
+          <div className="h-full flex flex-row overflow-hidden">
             <Sidebar
               user={user}
               setUser={setUser}
