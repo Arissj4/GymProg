@@ -8,6 +8,8 @@ import type { ButtonModel } from "../interfaces/Button";
 import type { Exercise } from "../interfaces/Exercise.ts";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import NumberSpinner from "../components/NumberSpinner.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   user: User;
@@ -42,6 +44,7 @@ function CreateWorkout(props: Props) {
       setExercisesList((prev) => [
         ...prev,
         {
+          id: crypto.randomUUID(),
           name: "",
           day: activeDay,
           sets: 0,
@@ -51,6 +54,12 @@ function CreateWorkout(props: Props) {
         },
       ]);
     },
+  };
+
+  const removeExercise = (id: string | undefined, day: number) => {
+    setExercisesList((prev) =>
+      prev.filter((exercise) => !(exercise.id === id && exercise.day === day)),
+    );
   };
 
   function selectWorkoutDay(btnNumber: number): void {
@@ -157,13 +166,28 @@ function CreateWorkout(props: Props) {
           >
             <ButtonComponent model={addExerciseButton} />
             <div className={"h-full overflow-scroll mt-2"}>
-              {exercisesList.map((exerciseInfo, index) => {
+              {exercisesList.map((exerciseInfo) => {
                 if (exerciseInfo.day === activeDay) {
                   return (
                     <div
                       className={"border border-gray-200 rounded-lg m-1 p-2"}
-                      key={index}
+                      key={exerciseInfo.id}
                     >
+                      <div className={"w-full flex justify-end mb-2"}>
+                        <Button
+                          className={"group w-fit min-w-fit!"}
+                          onClick={() =>
+                            removeExercise(exerciseInfo.id, exerciseInfo.day)
+                          }
+                        >
+                          <FontAwesomeIcon
+                            icon={faXmark}
+                            className={
+                              "size-1 text-gray-700 group-hover:text-red-700"
+                            }
+                          />
+                        </Button>
+                      </div>
                       <div>
                         <input
                           type={"text"}
