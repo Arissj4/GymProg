@@ -42,28 +42,29 @@ function MyWorkouts(props: pageProps): ReactElement {
     getWorkouts();
   }, []);
 
+  if (pageLoading) return <LoadComponent />;
+
+  if (pageError)
+    return (
+      <ErrorComponent
+        text="An error occurred while loading your workout plans. Please try again later."
+        activated={pageError}
+        onClose={() => setPageError(false)}
+      />
+    );
+
   return (
     <div
       id="my-workouts"
       className="flex-auto h-full p-6 flex-col justify-center w-[70%]"
     >
-      {pageLoading ? <LoadComponent /> : null}
-
-      {pageError ? (
-        <ErrorComponent
-          text="An error occurred while loading your workout plans. Please try again later."
-          activated={pageError}
-          onClose={() => setPageError(false)}
-        />
-      ) : null}
-
       <div>
         <span className="text-[24px] font-[1000] text-orange-500 block w-full h-fit text-center">
           My Workout Plans
         </span>
       </div>
 
-      {workouts.length === 0 && !pageLoading ? (
+      {workouts.length === 0 ? (
         <div className="text-center mt-4 text-gray-600">
           You don't have any workout plans yet. Create one to get started!
         </div>
